@@ -1,1 +1,1 @@
-cesar: recherche, supprimer, ajouter.
+Hugo/Cesar: recherche, supprimer, ajouter.

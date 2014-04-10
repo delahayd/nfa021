@@ -1,1 +1,6 @@
-Hugo/Cesar: recherche, supprimer, ajouter.
+Tâches :
+
+1 - Hugo/Cesar : recherche, supprimer, ajouter.
+
+2 - De Almeida Jorge/Omanhene Francis :
+Interface-CSS-Vérification de l'interface général.

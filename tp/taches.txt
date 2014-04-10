@@ -1,3 +1,4 @@
+
 TÃ¢ches :
 
 1 - Hugo Lozach/Cesar La Torre Garay: recherche, supprimer, ajouter.
@@ -6,3 +7,22 @@ TÃ¢ches :
 Interface-CSS-VÃ©rification de l'interface gÃ©nÃ©ral.
 
 3 - Assia/Mohammad:creation du carnet d'adresse avec les operation ajouter supprimer et modifier.
+ 
+
+4 - Maryse Chédanne: Chef de projet
+
+5
+NOM: DIALLO
+PRENOM: SALIOU
+
+NOM:CHOWDHURY	
+PRENOM:ARPHINE
+
+NOM:DOUMBIA
+PRENOM:IBRAHIM
+
+les taches pour le trinomes sont:
+-creation de la base de donnée
+-création de la table
+-connexion à la base de données
+-tester que la connexion est etablie

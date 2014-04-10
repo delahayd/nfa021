@@ -1,2 +1,12 @@
-Hugo/Cesar: recherche, supprimer, ajouter.
-Maryse Chédanne : chef de projet
+
+TÃ¢ches :
+
+1 - Hugo Lozach/Cesar La Torre Garay: recherche, supprimer, ajouter.
+
+2 - De Almeida Jorge/Omanhene Francis :
+Interface-CSS-VÃ©rification de l'interface gÃ©nÃ©ral.
+
+3 - Assia/Mohammad:creation du carnet d'adresse avec les operation ajouter supprimer et modifier.
+>>>>>>> d6798e2957fe1a44a50fa1769860f5261799f69d
+
+4 - Maryse Chédanne: Chef de projet

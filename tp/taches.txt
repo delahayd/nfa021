@@ -4,3 +4,5 @@ Tâches :
 
 2 - De Almeida Jorge/Omanhene Francis :
 Interface-CSS-Vérification de l'interface général.
+
+3 - Assia/Mohammad:creation du carnet d'adresse avec les operation ajouter supprimer et modifier.

@@ -1,6 +1,6 @@
 Tâches :
 
-1 - Hugo/Cesar : recherche, supprimer, ajouter.
+1 - Hugo Lozach/Cesar La Torre Garay: recherche, supprimer, ajouter.
 
 2 - De Almeida Jorge/Omanhene Francis :
 Interface-CSS-Vérification de l'interface général.

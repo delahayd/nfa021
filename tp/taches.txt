@@ -1,1 +1,2 @@
 Hugo/Cesar: recherche, supprimer, ajouter.
+Maryse Chédanne : chef de projet

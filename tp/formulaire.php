@@ -4,6 +4,7 @@
 <body>
 
 <form action="formulaire.php" method="GET"/>
+<p>Inserer une personne</p>
 nom:<input type="text" name="nom"/><br>
 prenom:<input type="text" name="prenom"/><br>
 numero_tel:<input type="text" name="numero de telephone"/><br>

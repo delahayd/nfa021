@@ -26,3 +26,14 @@ les taches pour le trinomes sont:
 -création de la table
 -connexion à la base de données
 -tester que la connexion est etablie
+
+
+
+
+
+12/04/2014
+La création des formulaires a été confiée jeudi dernier à Jorge, Assia et Mohammad.
+Qui gère les requêtes SQL (recherche, ajout, suppression)? Hugo et César où bien Assia et Mohammad?
+
+
+

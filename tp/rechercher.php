@@ -1,9 +1,12 @@
 <html>
 <head>
+	<meta charset="utf-8">
 </head>
 
 <body>
-	<a href="formulaire.php"> <input type="button" name="ajouter" value="ajouter une personne" /></a>
+	<!--<a href="formulaire.php"> <input type="button" name="rechercher" value="rechercher une personne" /></a>-->
+	
+	
 	<h1>rechercher une personne</h1>
 	<select>
 		<option value="nom">nom</option>
@@ -17,7 +20,7 @@
 
 
  <?php
-
+/*
 $nom=$_POST['nom'];
 
  
@@ -33,6 +36,7 @@ while ( $donnees=$recherche>fetch() )
 echo $donnes['nom'];
 </p>
 }
+*/
 
 /*
 $modifier= $bdd ->query ('SELECT * FROM  carnet WHERE NOM="'.$nom.'"');

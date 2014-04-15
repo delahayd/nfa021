@@ -1,8 +1,10 @@
+
 <?php
 
 try{
 $bdd=new PDO('mysql:host=localhost;dbname=carnet_adresse','root','');
-echo 'bbb';
+print("<br>");
+echo 'connexion établie';
 }
 catch(exception $e)
 {

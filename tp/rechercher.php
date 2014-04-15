@@ -28,6 +28,27 @@ echo $donnes['nom'];
 </p>
 }
 */
+
+//FAIRE 4 TRAITEMENTS DIFFERENTS SELON LE CHOIX DE LA LISTE DEROULANTE - Nom, prenom, numero_tel, email
+print_r($_GET);		//	pour tester - A effacer une fois la page OK
+
+if($_GET["choix"] = "nom"){
+}
+
+if($_GET["choix"] = "prenom"){
+}
+
+if($_GET["choix"] ="numero_tel"){
+}
+
+if($_GET["choix"] ="email"){
+}
+
+
+
+
+include("index.php");
+include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
 ?>
 
 <html>
@@ -36,14 +57,18 @@ echo $donnes['nom'];
 </head>
 
 <body>
-	<!--<a href="formulaire.php"> <input type="button" name="rechercher" value="rechercher une personne" /></a>-->
-	
-	<h1>rechercher une personne</h1>
-	<select>
-		<option value="nom">nom</option>
-		<option value="prenom">prenom</option>
-		<option value="numero_tel">numero_tel</option>
-		<option value="email">email</option>
-	</select>
+	<br>
+	<p>rechercher une personne par <p>
+	<form method = "get" action = "rechercher.php">
+		<p>
+			<select name="choix">			<!-- $_GET["choix"] = nom OU $_GET["choix"] = prenom OU $_GET["choix"] = numero_tel OU $_GET["choix"] = email -->
+				<option value="nom">Nom</option>
+				<option value="prenom">Prénom</option>
+				<option value="numero_tel">Téléphone</option>
+				<option value="email">E-mail</option>
+			</select>
+		</p>
+		<input type="submit" value="Rechercher" title="valider votre choix" />
+	</form>
 </body>
 </html>

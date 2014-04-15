@@ -11,8 +11,8 @@
 	<div id="content">
 		<!-- <h1>Menu</h1> -->
 		<a href="ajout.php">Ajout</a>
-		<a href="modifier.php">Modifier</a>
-		<a href="supprimer.php">Supprimer</a>
+		<a href="modifier.php">Modifier</a> <!-- a supprimer une fois toutes les fonctionnalités ok -->
+		<a href="supprimer.php">Supprimer</a> <!-- a supprimer une fois toutes les fonctionnalités ok -->
 		<a href="rechercher.php">Rechercher</a>
 	</div>
 

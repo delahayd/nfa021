@@ -15,7 +15,7 @@
 		<a href="ajout.php">Ajout</a>
 		<!-- <a href="modifier.php">Modifier</a>  a supprimer une fois toutes les fonctionnalités ok 
 		     <a href="supprimer.php">Supprimer</a> <!-- a supprimer une fois toutes les fonctionnalités ok -->
-		<a href="rechercher.php">Rechercher</a>
+		<a href="rechercher.php">Rechercher, Modifier ou supprimer</a>
 	</div>
 
 	<!-- <div id="footer">

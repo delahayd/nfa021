@@ -12,22 +12,23 @@
 	print("</td>");	
  }
  
- function bouton_supprimer($id){
-	//avec passage par l'URL de la clé primaire de l'entrée à supprimer <hidden>
+ function bouton_supprimer($id, $prenom, $nom){
+	//avec passage par l'URL des variables concernant l'entrée à supprimer <hidden>
 	$_GET['id']=$id;
+	$_GET['prenom']=$prenom;
+	$_GET['nom']=$nom;
 	print("<td>");
 		print("<form method=\"get\"  action=\"supprimer.php\" name=\"bouton supprimer\">");
 		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
+		print("<input type=\"hidden\" name=\"prenom\" value=".$_GET["prenom"].">");
+		print("<input type=\"hidden\" name=\"nom\" value=".$_GET["nom"].">");
 		print("<input type=\"submit\" value=\"Supprimer\">");
 		print("</form>");
 	print("</td>");
 	
 	//print("<a href=\"supprimer.php\">Supprimer");			//test avec lien
 		
-	/*$sql = "DELETE  
-			FROM carnet
-			WHERE id = $cle";			//supprime la personne selectionnée dans la BDD
-	*/		
+	
  }
  
  
@@ -131,7 +132,7 @@ if(!empty ($_GET["choix"])){
 					print("<td>".$donnees['numero_tel']."</td>");
 					print("<td>".$donnees['email']."</td>");
 					bouton_modifier($donnees['id']);				// appel fonction bouton_modifier() - sql pas encore écrit
-					bouton_supprimer($donnees['id']);				// appel fonction bouton_supprimer() - sql pas encore écrit
+					bouton_supprimer($donnees['id'], $donnees['prenom'],$donnees['nom']);				// appel fonction bouton_supprimer() - sql pas encore écrit
 			print("</tr>\n");
 			}	//fin while
 

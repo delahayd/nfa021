@@ -1,43 +1,26 @@
 
  <?php
- if(!isset($_choix))
+ print_r($_GET);		//OK
+include("index.php");
+include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
+	
+ if(!isset($_GET["choix"]))
 	$_choix="";
-/*
-$nom=$_POST['nom'];
- 
-echo "$nom";
- $bdd =new PDO (' mysql:host=localhost; dbname=carnet_adresse', 'root', ' ');
-
-// on recupere le contenu de la tab carnet dont le nom est le nom entre par l'utilisateur 
-$recherche= $bdd ->query ('SELECT * FROM  carnet WHERE NOM="'.$nom.'"');
-// on affiche chaque entree une a une
-while ( $donnees=$recherche>fetch() )
-{
-<p>
-echo $donnes['nom'];
-</p>
-}
-
-$modifier= $bdd ->query ('SELECT * FROM  carnet WHERE NOM="'.$nom.'"');
-// on affiche chaque entree une a une
-while ( $donnees=$reponse->fetch() )
-{
-<p>
-echo $donnes['nom'];
-</p>
-}
-*/
-
-//print_r($_GET);		//	pour tester - A effacer une fois la page OK
 
 if(isset ($_GET["choix"])){	
 	$choix = $_GET["choix"];			//stocke le champ choisi pour la recherche
 	}	
 	
-	include("index.php");
-	include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
+if(isset ($_GET["saisie_clavier"])){	
+	$saisie = $_GET["saisie_clavier"];			//stocke le texte saisi  au clavier pour la recherche
+	}	
+	
+//print_r($saisie);		//OK
+	
+	
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -55,7 +38,7 @@ if(isset ($_GET["choix"])){
 					<option value="E-mail" <?php if (isset ($choix) &&($choix == "E-mail")) print("selected") ?>>E-mail</option>
 				</select>
 			</p>
-				<input type="submit" value="Valider" title="valider votre choix" />
+				<input type="submit" value="Valider" title="valider votre choix">
 		</form>
 		
 <?php
@@ -64,9 +47,11 @@ if(!empty ($_GET["choix"])){
 ?>	
 
 	<!-- champ de saisie du terme à rechercher -->
-	<form method=\"get\" action=\"rechercher.php\">
-		<?php print($choix.": "); ?><input type="text" name="saisie_clavier"/>
-		<input type="submit" value="Recherche" title="Lancer la recherche" />
+	<form method="get" action="rechercher.php">
+		<?php print($choix.": "); ?>
+		<input type="text" name="saisie_clavier">
+		<input type="hidden" name="choix" value="<?php print($_GET['choix']); ?>">>
+		<input type="submit" value="Recherche" title="Lancer la recherche" >
 	</form>
 	
 	
@@ -77,36 +62,44 @@ if(!empty ($_GET["choix"])){
 	if($choix == "Téléphone") $colonne_table = "numero_tel";
 	if($choix == "E-mail") $colonne_table = "email";
 	
-	$sql = 'SELECT * FROM carnet
-			WHERE $colonne_table = $_GET["saisie_clavier"]';
-			
-	$recupere = $bdd -> query($sql);			
+	//print_r($_GET);			//OK
+	//print_r($choix);		// variable $choix OK
+	
+	$sql = "SELECT distinct* 
+			FROM carnet
+			WHERE $colonne_table = '$saisie'";			//selection de tous les champs afin de récupérer la clè primaire
+	
+	
+	$recupere = $bdd->query($sql);	
+	$donnees = $recupere->fetch();
 
 		print("<table border=\"1\">");			// résultats dans un tableau
-		print("<caption>Résultat de la recherche</caption>");
-			print("<tr>");			//	Entête du tableau de résultat
-				print("<th>Nom</th>");
-				print("<th>Prénom</th>");					
-				print("<th>Téléphone</th>");
-				print("<th>E-mail</th>");
-				print("<th>A traiter</th>");		//cellule à laisser vide
-				print("<th>A traiter</th>");		//cellule à laisser vide
+			print("<caption>Résultat de la recherche</caption>");
+				print("<tr>");			//	Entête du tableau de résultat - affichage OK
+					print("<th>Nom</th>");
+					print("<th>Prénom</th>");					
+					print("<th>Téléphone</th>");
+					print("<th>E-mail</th>");
+					print("<th>A traiter</th>");		//cellule à laisser vide
+					print("<th>A traiter</th>");		//cellule à laisser vide
+				print("</tr>");
+		
+				// corps du tableau de résultats
+		while($donnees){		
+	 			print("<tr>");
+					print("<td>".$donnees['nom']."</td>");
+					print("<td>".$donnees['prenom']."</td>");
+					print("<td>".$donnees['numero_tel']."</td>");
+					print("<td>".$donnees['email']."</td>");
+					print("<td>bouton MODIFIER</td>");				// sql pas encore écrit
+					print("<td>bouton SUPPRIMER</td>");				// sql pas encore écrit
 			print("</tr>");
-	
-			// corps du tableau de résultats
-	while ($donnees = $recupere ->fetch()){		//Fatal error: Call to a member function fetch() on a non-object in C:\wamp\www\nfa021\tp\rechercher.php on line 97
-			print("<tr>");
-				print("<td>".$donnees['nom']."</td>");
-				print("<td>".$donnees['prenom']."</td>");
-				print("<td>".$donnees['numero_tel']."</td>");
-				print("<td>".$donnees['email']."</td>");
-				print("<td>bouton MODIFIER</td>");				// sql pas encore écrit
-				print("<td>bouton SUPPRIMER</td>");				// sql pas encore écrit
-			print("</tr>");
-	}	//fin while
-	
+			}	//fin while
+
 		print("</table>");
+	
 	}
+	
 ?>
 
 </body>

@@ -13,7 +13,7 @@ include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la pag
 ?>
 
 <form action="supprimer.php" method="GET"/>
-<p>Modifer une entrée</p>
+<p>mettre message de confirmation de suppression</p>
 
 </form>
 </body>

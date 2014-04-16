@@ -1,8 +1,45 @@
-
  <?php
+ // FONCTIONS "modifier" et "supprimer
+ 
+ function bouton_modifier(){
+	print("<td>");
+		print("<form method=\"get\" action=\"modifier.php\" name=\"bouton modifier\">");
+		print("<input type=\"submit\" value=\"Modifier\">");
+		print("</form>");
+	print("</td>");	
+ }
+ 
+ function bouton_supprimer(){
+	print("<td>");
+		print("<form method=\"get\"  action=\"supprimer.php\" name=\"bouton supprimer\">");
+		print("<input type=\"submit\" value=\"Supprimer\">");
+		print("</form>");
+	print("</td>");
+	
+	//print("<a href=\"supprimer.php\">Supprimer");			//test avec lien
+		
+	/*$sql = "DELETE  
+			FROM carnet
+			WHERE id = $cle";			//supprime la personne selectionnée dans la BDD
+	*/		
+ }
+ 
+ 
+ 
+ 
+ // FIN FONCTIONS
+ ?>
+ 
+ 
+ 
+ <?php
+ 
+ //AJOUTER option d'affichage du carnet d'adresse complet si aucun champ n'est renseigné
+ // Ajouter un message si aucun résultat n'est trouvé (si le tableau retourné est vide)
  //print_r($_GET);		//OK
-include("index.php");
+
 include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
+include("index.php"); 	
 	
 if(isset ($_GET["choix"])){			//stocke le champ choisi pour la recherche
 	$choix = $_GET["choix"];			
@@ -12,11 +49,11 @@ if(isset ($_GET["choix"])){			//stocke le champ choisi pour la recherche
 if(isset ($_GET["saisie_clavier"])){	
 	$saisie = $_GET["saisie_clavier"];			//stocke le texte saisi  au clavier pour la recherche
 	}
+		else $saisie="a saisir";				//$saisie contient une valeur quelconque afin de ne pas afficher un tableau de résultat correspondant au champ séléctionné  avec la valeur "" 
 
 //print_r($saisie);		//OK
 	
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,17 +61,18 @@ if(isset ($_GET["saisie_clavier"])){
 </head>
 
 <body>
+
 	<br>
 	<p>rechercher une personne par <p>
 		<form method = "get" action = "rechercher.php">  <?php //formulaire de recherche par choix ?>
-			<p>
+			<!-- <p> -->
 				<select name="choix">			<!-- $_GET["choix"] = Nom OU $_GET["choix"] = Prénom OU $_GET["choix"] = Téléphone OU $_GET["choix"] = E-mail -->
 					<option value="Nom" <?php if ($choix == "Nom") print("selected") ?>>Nom</option>
 					<option value="Prénom" <?php if ($choix == "Prénom") print("selected") ?>>Prénom</option>
 					<option value="Téléphone" <?php if ($choix == "Téléphone") print("selected") ?>>Téléphone</option>
 					<option value="E-mail" <?php if ($choix == "E-mail") print("selected") ?>>E-mail</option>
 				</select>
-			</p>
+			<!-- </p> -->
 				<input type="submit" value="Valider" title="valider votre choix">
 		</form>
 		
@@ -60,7 +98,6 @@ if(!empty ($_GET["choix"])){
 	
 	//print_r($_GET);			//OK
 	//print($choix);		// variable $choix OK
-	//print ("saisie clavier = ".$saisie);				//variable inconnue
 	
 	$sql = "SELECT * 
 			FROM carnet
@@ -68,10 +105,9 @@ if(!empty ($_GET["choix"])){
 	
 	
 	$recupere = $bdd->query($sql);	
-	//$donnees = $recupere->fetch();
-
+	
 		print("<table border=\"1\">");			// Affichage  Tableau et des résultats OK
-			print("<caption>Résultat de la recherche</caption>");
+			print("<caption>Résultat de la recherche</caption>\n");
 				print("<tr>");			
 					print("<th>Nom</th>");
 					print("<th>Prénom</th>");					
@@ -79,7 +115,7 @@ if(!empty ($_GET["choix"])){
 					print("<th>E-mail</th>");
 					print("<th></th>");		
 					print("<th></th>");		
-				print("</tr>");
+				print("</tr>\n");
 		
 				// corps du tableau de résultats
 		while($donnees = $recupere->fetch()){		
@@ -88,9 +124,9 @@ if(!empty ($_GET["choix"])){
 					print("<td>".$donnees['prenom']."</td>");
 					print("<td>".$donnees['numero_tel']."</td>");
 					print("<td>".$donnees['email']."</td>");
-					print("<td>bouton MODIFIER</td>");				// sql pas encore écrit
-					print("<td>bouton SUPPRIMER</td>");				// sql pas encore écrit
-			print("</tr>");
+					bouton_modifier();				// appel fonction bouton_modifier() - sql pas encore écrit
+					bouton_supprimer();				// appel fonction bouton_supprimer() - sql pas encore écrit
+			print("</tr>\n");
 			}	//fin while
 
 		print("</table>");

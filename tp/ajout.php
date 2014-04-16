@@ -7,6 +7,7 @@
 <?php
 //Zone de traitement du formulaire d'ajout // INSERTION OK
 // VOIR FORMAT DES DONNEES POUR LE CHAMP numero_tel. Il faut saisir le numéro sans espace et le premier chiffre (qui est 0) n'est pas enregistré
+// AJOUTER un message de confirmation quand une entrée en enregistrée dans la BDD
 
 include("index.php");
 include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
@@ -14,7 +15,7 @@ include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la pag
 
 if(!empty ($_GET["nom"]) || !empty ($_GET["prenom"]))			//si nom OU prenom renseigné
 	{
-		print_r($_GET);		//	pour tester - A effacer une fois la page OK
+		//print_r($_GET);		//	pour tester - A effacer une fois la page OK
 		$nom = $_GET["nom"];
 		$prenom = $_GET["prenom"];
 		$tel = $_GET["numero_de_telephone"];

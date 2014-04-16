@@ -19,7 +19,7 @@ include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la pag
 
 
 <form action="modifier.php" method="GET"/>
-<p>Modifer une entrée</p>
+<p>mettre message de confirmation de modification</p>
 
 </form>
 </body>

@@ -10,11 +10,12 @@
 
 include("index.php");
 include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
+
+
 ?>
 
-<form action="supprimer.php" method="GET"/>
+
 <p>mettre message de confirmation de suppression</p>
 
-</form>
 </body>
 </html>

@@ -1,17 +1,23 @@
  <?php
  // FONCTIONS "modifier" et "supprimer
  
- function bouton_modifier(){
+ function bouton_modifier($id){
+	//avec passage par l'URL de la clé primaire de l'entrée à modifier <hidden>
+	$_GET['id']=$id;
 	print("<td>");
 		print("<form method=\"get\" action=\"modifier.php\" name=\"bouton modifier\">");
+		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
 		print("<input type=\"submit\" value=\"Modifier\">");
 		print("</form>");
 	print("</td>");	
  }
  
- function bouton_supprimer(){
+ function bouton_supprimer($id){
+	//avec passage par l'URL de la clé primaire de l'entrée à supprimer <hidden>
+	$_GET['id']=$id;
 	print("<td>");
 		print("<form method=\"get\"  action=\"supprimer.php\" name=\"bouton supprimer\">");
+		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
 		print("<input type=\"submit\" value=\"Supprimer\">");
 		print("</form>");
 	print("</td>");
@@ -124,8 +130,8 @@ if(!empty ($_GET["choix"])){
 					print("<td>".$donnees['prenom']."</td>");
 					print("<td>".$donnees['numero_tel']."</td>");
 					print("<td>".$donnees['email']."</td>");
-					bouton_modifier();				// appel fonction bouton_modifier() - sql pas encore écrit
-					bouton_supprimer();				// appel fonction bouton_supprimer() - sql pas encore écrit
+					bouton_modifier($donnees['id']);				// appel fonction bouton_modifier() - sql pas encore écrit
+					bouton_supprimer($donnees['id']);				// appel fonction bouton_supprimer() - sql pas encore écrit
 			print("</tr>\n");
 			}	//fin while
 

@@ -1,12 +1,21 @@
  <?php
  // FONCTIONS "modifier" et "supprimer
  
- function bouton_modifier($id){
+ function bouton_modifier($id, $prenom, $nom, $tel, $email){
 	//avec passage par l'URL de la clé primaire de l'entrée à modifier <hidden>
 	$_GET['id']=$id;
+	$_GET['prenom']=$prenom;
+	$_GET['nom']=$nom;
+	$_GET['numero_tel']=$tel;
+	$_GET['email']=$email;
+	
 	print("<td>");
 		print("<form method=\"get\" action=\"modifier.php\" name=\"bouton modifier\">");
 		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
+		print("<input type=\"hidden\" name=\"prenom\" value=".$_GET["prenom"].">");
+		print("<input type=\"hidden\" name=\"nom\" value=".$_GET["nom"].">");
+		print("<input type=\"hidden\" name=\"numero_tel\" value=".$_GET["numero_tel"].">");
+		print("<input type=\"hidden\" name=\"email\" value=".$_GET["email"].">");
 		print("<input type=\"submit\" value=\"Modifier\">");
 		print("</form>");
 	print("</td>");	
@@ -17,6 +26,7 @@
 	$_GET['id']=$id;
 	$_GET['prenom']=$prenom;
 	$_GET['nom']=$nom;
+	
 	print("<td>");
 		print("<form method=\"get\"  action=\"supprimer.php\" name=\"bouton supprimer\">");
 		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
@@ -131,7 +141,7 @@ if(!empty ($_GET["choix"])){
 					print("<td>".$donnees['prenom']."</td>");
 					print("<td>".$donnees['numero_tel']."</td>");
 					print("<td>".$donnees['email']."</td>");
-					bouton_modifier($donnees['id']);				// appel fonction bouton_modifier() - sql pas encore écrit
+					bouton_modifier($donnees['id'],$donnees['prenom'],$donnees['nom'], $donnees['numero_tel'], $donnees['email'] );				// appel fonction bouton_modifier() - sql pas encore écrit
 					bouton_supprimer($donnees['id'], $donnees['prenom'],$donnees['nom']);				// appel fonction bouton_supprimer() - sql pas encore écrit
 			print("</tr>\n");
 			}	//fin while

@@ -1,22 +1,19 @@
 
  <?php
- print_r($_GET);		//OK
+ //print_r($_GET);		//OK
 include("index.php");
 include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
 	
- if(!isset($_GET["choix"]))
-	$_choix="";
-
-if(isset ($_GET["choix"])){	
-	$choix = $_GET["choix"];			//stocke le champ choisi pour la recherche
-	}	
+if(isset ($_GET["choix"])){			//stocke le champ choisi pour la recherche
+	$choix = $_GET["choix"];			
+	}
+		else $choix="";				// si aucun choix dans la liste déroulante
 	
 if(isset ($_GET["saisie_clavier"])){	
 	$saisie = $_GET["saisie_clavier"];			//stocke le texte saisi  au clavier pour la recherche
-	}	
-	
+	}
+
 //print_r($saisie);		//OK
-	
 	
 ?>
 
@@ -32,10 +29,10 @@ if(isset ($_GET["saisie_clavier"])){
 		<form method = "get" action = "rechercher.php">  <?php //formulaire de recherche par choix ?>
 			<p>
 				<select name="choix">			<!-- $_GET["choix"] = Nom OU $_GET["choix"] = Prénom OU $_GET["choix"] = Téléphone OU $_GET["choix"] = E-mail -->
-					<option value="Nom" <?php if (isset ($choix) && ($choix == "Nom")) print("selected") ?>>Nom</option>
-					<option value="Prénom" <?php if (isset ($choix) && ($choix == "Prénom")) print("selected") ?>>Prénom</option>
-					<option value="Téléphone" <?php if (isset ($choix) &&($choix == "Téléphone")) print("selected") ?>>Téléphone</option>
-					<option value="E-mail" <?php if (isset ($choix) &&($choix == "E-mail")) print("selected") ?>>E-mail</option>
+					<option value="Nom" <?php if ($choix == "Nom") print("selected") ?>>Nom</option>
+					<option value="Prénom" <?php if ($choix == "Prénom") print("selected") ?>>Prénom</option>
+					<option value="Téléphone" <?php if ($choix == "Téléphone") print("selected") ?>>Téléphone</option>
+					<option value="E-mail" <?php if ($choix == "E-mail") print("selected") ?>>E-mail</option>
 				</select>
 			</p>
 				<input type="submit" value="Valider" title="valider votre choix">
@@ -43,14 +40,13 @@ if(isset ($_GET["saisie_clavier"])){
 		
 <?php
 if(!empty ($_GET["choix"])){
-	//print ($choix." à rechercher: ");				//affiche le champ choisi pour le recherche si on vient de valider un choix - sinon pas d'affichage
+	//print ($choix." à rechercher: ");				//affiche le champ choisi pour le recherche si on vient de valider un choix - sinon pas d'affichage  OK
 ?>	
-
 	<!-- champ de saisie du terme à rechercher -->
 	<form method="get" action="rechercher.php">
 		<?php print($choix.": "); ?>
 		<input type="text" name="saisie_clavier">
-		<input type="hidden" name="choix" value="<?php print($_GET['choix']); ?>">>
+		<input type="hidden" name="choix" value="<?php print($_GET["choix"]); ?>">>
 		<input type="submit" value="Recherche" title="Lancer la recherche" >
 	</form>
 	
@@ -63,29 +59,30 @@ if(!empty ($_GET["choix"])){
 	if($choix == "E-mail") $colonne_table = "email";
 	
 	//print_r($_GET);			//OK
-	//print_r($choix);		// variable $choix OK
+	//print($choix);		// variable $choix OK
+	//print ("saisie clavier = ".$saisie);				//variable inconnue
 	
-	$sql = "SELECT distinct* 
+	$sql = "SELECT * 
 			FROM carnet
 			WHERE $colonne_table = '$saisie'";			//selection de tous les champs afin de récupérer la clè primaire
 	
 	
 	$recupere = $bdd->query($sql);	
-	$donnees = $recupere->fetch();
+	//$donnees = $recupere->fetch();
 
-		print("<table border=\"1\">");			// résultats dans un tableau
+		print("<table border=\"1\">");			// Affichage  Tableau et des résultats OK
 			print("<caption>Résultat de la recherche</caption>");
-				print("<tr>");			//	Entête du tableau de résultat - affichage OK
+				print("<tr>");			
 					print("<th>Nom</th>");
 					print("<th>Prénom</th>");					
 					print("<th>Téléphone</th>");
 					print("<th>E-mail</th>");
-					print("<th>A traiter</th>");		//cellule à laisser vide
-					print("<th>A traiter</th>");		//cellule à laisser vide
+					print("<th></th>");		
+					print("<th></th>");		
 				print("</tr>");
 		
 				// corps du tableau de résultats
-		while($donnees){		
+		while($donnees = $recupere->fetch()){		
 	 			print("<tr>");
 					print("<td>".$donnees['nom']."</td>");
 					print("<td>".$donnees['prenom']."</td>");

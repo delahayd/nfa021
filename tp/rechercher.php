@@ -36,23 +36,15 @@
 		print("</form>");
 	print("</td>");
 	
-	//print("<a href=\"supprimer.php\">Supprimer");			//test avec lien
-		
-	
  }
- 
- 
- 
- 
+  
  // FIN FONCTIONS
  ?>
  
- 
- 
- <?php
+  <?php
  
  //AJOUTER option d'affichage du carnet d'adresse complet si aucun champ n'est renseigné
- // Ajouter un message si aucun résultat n'est trouvé (si le tableau retourné est vide)
+ // Ajouter un message si aucun résultat n'est trouvé (si le tableau retourné est vide) avec une variable compteur
  //print_r($_GET);		//OK
 
 include("connexion_carnet.php");	//ajoute la page connexion_carnet.php à la page courante pour connexion à la BDD
@@ -71,6 +63,7 @@ if(isset ($_GET["saisie_clavier"])){
 //print_r($saisie);		//OK
 	
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,10 +113,9 @@ if(!empty ($_GET["choix"])){
 			FROM carnet
 			WHERE $colonne_table = '$saisie'";			//selection de tous les champs afin de récupérer la clè primaire
 	
-	
-	$recupere = $bdd->query($sql);	
-	
-		print("<table border=\"1\">");			// Affichage  Tableau et des résultats OK
+	$recupere = $bdd->query($sql);
+		
+		print("<table>");			// Affichage  Tableau et des résultats OK
 			print("<caption>Résultat de la recherche</caption>\n");
 				print("<tr>");			
 					print("<th>Nom</th>");
@@ -149,7 +141,6 @@ if(!empty ($_GET["choix"])){
 		print("</table>");
 	
 	}
-	
 ?>
 
 </body>

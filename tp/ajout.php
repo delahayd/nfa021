@@ -38,7 +38,7 @@ if(!empty ($_GET["nom"]) || !empty ($_GET["prenom"]))			//si nom OU prenom rense
 nom:<input type="text" name="nom"/><br>
 prenom:<input type="text" name="prenom"/><br>
 numero_tel:<input type="text" name="numero_de_telephone"/><br>
-email:<input type="text" name="email"/><br>
+email:<input type="email" name="email"/><br>
 <input type="submit" name="valider"/>
 </form>
 </body>

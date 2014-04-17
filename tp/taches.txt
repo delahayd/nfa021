@@ -7,7 +7,6 @@ TÃ¢ches :
 Interface-CSS-VÃ©rification de l'interface gÃ©nÃ©ral.
 
 3 - Assia/Mohammad:creation du carnet d'adresse avec les operation ajouter supprimer et modifier.
- 
 
 4 - Maryse Chédanne: Chef de projet
 
@@ -34,6 +33,3 @@ les taches pour le trinomes sont:
 12/04/2014
 La création des formulaires a été confiée jeudi dernier à Jorge, Assia et Mohammad.
 Qui gère les requêtes SQL (recherche, ajout, suppression)? Hugo et César où bien Assia et Mohammad?
-
-
-

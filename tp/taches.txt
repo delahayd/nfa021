@@ -6,3 +6,5 @@ Tâches :
 Interface-CSS-Vérification de l'interface général.
 
 3 - Assia/Mohammad:creation du carnet d'adresse avec les operation ajouter supprimer et modifier.
+
+4 - CHOWDHURY Arphine/DIALLO Saliou/DOUMBIA Ibrahim: Création de la base de données->Création de la Table->Connexion à la base de données-> Tester que la connexion soit etablie

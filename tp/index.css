@@ -1,0 +1,24 @@
+body {
+	font-size: 14px;
+	background-color: #fff;
+	color: #000;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 955px;
+	background-color: ;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+}
+
+
+.menu {
+	
+	width: 250px;
+	background-color: #666;
+	height: 680px;
+	float: left;	
+	
+}

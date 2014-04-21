@@ -21,8 +21,15 @@ if(!empty ($_GET["nom"]) || !empty ($_GET["prenom"]))			//si nom OU prenom rense
 		$tel = $_GET["numero_de_telephone"];
 		$email = $_GET["email"];
 		
-		$bdd ->exec("INSERT INTO carnet (nom, prenom, numero_tel, email)
+		try
+			{$bdd ->exec("INSERT INTO carnet (nom, prenom, numero_tel, email)
 					VALUES ('$nom', '$prenom', '$tel', '$email')");
+					
+			print("Le contact \"".$prenom." ". $nom."\" est bien enregistré ");
+			}	catch (exception $e){
+				die('error :' .$e ->getMessage()); 
+				}
+				
 	}
 
 	// purge du formulaire - Evite de saisir plusieurs fois le même individu si on valide de nouveau

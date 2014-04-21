@@ -25,7 +25,7 @@ if(!empty ($_GET["nom"]) || !empty ($_GET["prenom"]))			//si nom OU prenom rense
 			{$bdd ->exec("INSERT INTO carnet (nom, prenom, numero_tel, email)
 					VALUES ('$nom', '$prenom', '$tel', '$email')");
 					
-			print("Le contact \"".$prenom." ". $nom."\" est bien enregistré ");
+			print("<p><font color = \"lime\">Le contact \"". $prenom." ". $nom."\" est bien enregistré</font></p>");
 			}	catch (exception $e){
 				die('error :' .$e ->getMessage()); 
 				}

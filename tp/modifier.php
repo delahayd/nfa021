@@ -131,7 +131,7 @@ $email = $_GET['email'];
 	print("</table>");
 
 ?>
-<p>mettre message de confirmation de modification</p>
+
 
 </form>
 

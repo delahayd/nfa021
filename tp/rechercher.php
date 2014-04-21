@@ -28,7 +28,7 @@
 	$_GET['nom']=$nom;
 	
 	print("<td>");
-		print("<form method=\"get\"  action=\"supprimer.php\" name=\"bouton supprimer\">");
+		print("<form method=\"get\"  action=\"confirmer_supprimer.php\" name=\"bouton supprimer\">");
 		print("<input type=\"hidden\" name=\"id\" value=".$_GET["id"].">");
 		print("<input type=\"hidden\" name=\"prenom\" value=".$_GET["prenom"].">");
 		print("<input type=\"hidden\" name=\"nom\" value=".$_GET["nom"].">");

@@ -5,3 +5,6 @@ PAS PLUS DE 2 PERSONNES PAR TACHE.
 1 – Maryse CHEDANNE
 * Chef de projet.
 * Contrôle de la présence des auditeurs aux différentes séances de travail.
+* Création de la base de données et des tables (avec Francis)
+
+	

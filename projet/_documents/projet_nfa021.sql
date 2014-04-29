@@ -14,28 +14,31 @@ CREATE TABLE utilisateur(
         sexe           Char (1) NOT NULL ,
         id_date_date   Int NOT NULL ,
         PRIMARY KEY (id_utilisateur ) ,
-        UNIQUE (pseudo )
+        UNIQUE (pseudo ,email )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE outil(
-        id_outil int (11) Auto_increment  NOT NULL ,
-        nom      Varchar (50) NOT NULL ,
+        id_outil  int (11) Auto_increment  NOT NULL ,
+        nom_outil Varchar (50) NOT NULL ,
         PRIMARY KEY (id_outil ) ,
-        UNIQUE (nom )
+        UNIQUE (nom_outil )
 )ENGINE=InnoDB;
 
 
-CREATE TABLE version(
-        id_version int (11) Auto_increment  NOT NULL ,
-        nom        Varchar (25) ,
+CREATE TABLE version_biblio(
+        id_version                  int (11) Auto_increment  NOT NULL ,
+        nom_version_biblio          Varchar (25) ,
+        id_biblio_bibliotheque_TPTP Int NOT NULL ,
         PRIMARY KEY (id_version )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE probleme(
-        id_probleme  int (11) Auto_increment  NOT NULL ,
-        nom_probleme Varchar (50) NOT NULL ,
+        id_probleme                int (11) Auto_increment  NOT NULL ,
+        nom_probleme               Varchar (50) NOT NULL ,
+        id_categorie_categorie     Int NOT NULL ,
+        id_utilisateur_utilisateur Int NOT NULL ,
         PRIMARY KEY (id_probleme ) ,
         UNIQUE (nom_probleme )
 )ENGINE=InnoDB;
@@ -43,7 +46,7 @@ CREATE TABLE probleme(
 
 CREATE TABLE bibliotheque_TPTP(
         id_biblio                  int (11) Auto_increment  NOT NULL ,
-        nom                        Varchar (25) NOT NULL ,
+        nom_biblio                 Varchar (25) NOT NULL ,
         id_utilisateur_utilisateur Int NOT NULL ,
         PRIMARY KEY (id_biblio )
 )ENGINE=InnoDB;
@@ -58,17 +61,17 @@ CREATE TABLE date(
 
 CREATE TABLE temps_limite(
         id_temps_limite int (11) Auto_increment  NOT NULL ,
-        taille          Double ,
+        temps           Double ,
         PRIMARY KEY (id_temps_limite ) ,
-        UNIQUE (taille )
+        UNIQUE (temps )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE memoire_limite(
         id_memoire int (11) Auto_increment  NOT NULL ,
-        taille     Double ,
+        memoire    Double ,
         PRIMARY KEY (id_memoire ) ,
-        UNIQUE (taille )
+        UNIQUE (memoire )
 )ENGINE=InnoDB;
 
 
@@ -109,17 +112,27 @@ CREATE TABLE test(
 )ENGINE=InnoDB;
 
 
-CREATE TABLE editer(
-        id_outil_outil     Int NOT NULL ,
-        id_version_version Int NOT NULL ,
-        PRIMARY KEY (id_outil_outil ,id_version_version )
+CREATE TABLE categorie(
+        id_categorie                int (11) Auto_increment  NOT NULL ,
+        nom_categorie               Varchar (25) ,
+        id_biblio_bibliotheque_TPTP Int NOT NULL ,
+        id_utilisateur_utilisateur  Int NOT NULL ,
+        PRIMARY KEY (id_categorie )
 )ENGINE=InnoDB;
 
 
-CREATE TABLE appartenir(
-        id_version_version          Int NOT NULL ,
-        id_biblio_bibliotheque_TPTP Int NOT NULL ,
-        PRIMARY KEY (id_version_version ,id_biblio_bibliotheque_TPTP )
+CREATE TABLE version_outil(
+        id_version_outil  int (11) Auto_increment  NOT NULL ,
+        nom_version_outil Varchar (25) ,
+        PRIMARY KEY (id_version_outil ) ,
+        UNIQUE (nom_version_outil )
+)ENGINE=InnoDB;
+
+
+CREATE TABLE editer(
+        id_outil_outil                 Int NOT NULL ,
+        id_version_outil_version_outil Int NOT NULL ,
+        PRIMARY KEY (id_outil_outil ,id_version_outil_version_outil )
 )ENGINE=InnoDB;
 
 
@@ -129,14 +142,10 @@ CREATE TABLE executer(
         PRIMARY KEY (id_outil_outil ,id_appel_appel )
 )ENGINE=InnoDB;
 
-
-CREATE TABLE contenir(
-        id_probleme_probleme        Int NOT NULL ,
-        id_biblio_bibliotheque_TPTP Int NOT NULL ,
-        PRIMARY KEY (id_probleme_probleme ,id_biblio_bibliotheque_TPTP )
-)ENGINE=InnoDB;
-
 ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_id_date_date FOREIGN KEY (id_date_date) REFERENCES date(id_date);
+ALTER TABLE version_biblio ADD CONSTRAINT FK_version_biblio_id_biblio_bibliotheque_TPTP FOREIGN KEY (id_biblio_bibliotheque_TPTP) REFERENCES bibliotheque_TPTP(id_biblio);
+ALTER TABLE probleme ADD CONSTRAINT FK_probleme_id_categorie_categorie FOREIGN KEY (id_categorie_categorie) REFERENCES categorie(id_categorie);
+ALTER TABLE probleme ADD CONSTRAINT FK_probleme_id_utilisateur_utilisateur FOREIGN KEY (id_utilisateur_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE bibliotheque_TPTP ADD CONSTRAINT FK_bibliotheque_TPTP_id_utilisateur_utilisateur FOREIGN KEY (id_utilisateur_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE preuve ADD CONSTRAINT FK_preuve_id_test_test FOREIGN KEY (id_test_test) REFERENCES test(id_test);
 ALTER TABLE preuve ADD CONSTRAINT FK_preuve_id_temps_execution_temps_execution FOREIGN KEY (id_temps_execution_temps_execution) REFERENCES temps_execution(id_temps_execution);
@@ -147,11 +156,9 @@ ALTER TABLE test ADD CONSTRAINT FK_test_id_preuve_preuve FOREIGN KEY (id_preuve_
 ALTER TABLE test ADD CONSTRAINT FK_test_id_outil_outil FOREIGN KEY (id_outil_outil) REFERENCES outil(id_outil);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_date_date FOREIGN KEY (id_date_date) REFERENCES date(id_date);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_probleme_probleme FOREIGN KEY (id_probleme_probleme) REFERENCES probleme(id_probleme);
+ALTER TABLE categorie ADD CONSTRAINT FK_categorie_id_biblio_bibliotheque_TPTP FOREIGN KEY (id_biblio_bibliotheque_TPTP) REFERENCES bibliotheque_TPTP(id_biblio);
+ALTER TABLE categorie ADD CONSTRAINT FK_categorie_id_utilisateur_utilisateur FOREIGN KEY (id_utilisateur_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE editer ADD CONSTRAINT FK_editer_id_outil_outil FOREIGN KEY (id_outil_outil) REFERENCES outil(id_outil);
-ALTER TABLE editer ADD CONSTRAINT FK_editer_id_version_version FOREIGN KEY (id_version_version) REFERENCES version(id_version);
-ALTER TABLE appartenir ADD CONSTRAINT FK_appartenir_id_version_version FOREIGN KEY (id_version_version) REFERENCES version(id_version);
-ALTER TABLE appartenir ADD CONSTRAINT FK_appartenir_id_biblio_bibliotheque_TPTP FOREIGN KEY (id_biblio_bibliotheque_TPTP) REFERENCES bibliotheque_TPTP(id_biblio);
+ALTER TABLE editer ADD CONSTRAINT FK_editer_id_version_outil_version_outil FOREIGN KEY (id_version_outil_version_outil) REFERENCES version_outil(id_version_outil);
 ALTER TABLE executer ADD CONSTRAINT FK_executer_id_outil_outil FOREIGN KEY (id_outil_outil) REFERENCES outil(id_outil);
 ALTER TABLE executer ADD CONSTRAINT FK_executer_id_appel_appel FOREIGN KEY (id_appel_appel) REFERENCES appel(id_appel);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_probleme_probleme FOREIGN KEY (id_probleme_probleme) REFERENCES probleme(id_probleme);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_biblio_bibliotheque_TPTP FOREIGN KEY (id_biblio_bibliotheque_TPTP) REFERENCES bibliotheque_TPTP(id_biblio);

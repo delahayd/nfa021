@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 14 Mai 2014 à 21:14
+-- Généré le: Mer 14 Mai 2014 à 21:15
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.3.13
 
@@ -23,23 +23,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `bibliotheque_tptp`
+-- Structure de la table `outil`
 --
 
-CREATE TABLE IF NOT EXISTS `bibliotheque_tptp` (
-  `id_biblio` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_biblio` varchar(25) NOT NULL,
-  `id_utilisateur_utilisateur` int(11) NOT NULL,
-  PRIMARY KEY (`id_biblio`),
-  KEY `FK_bibliotheque_TPTP_id_utilisateur_utilisateur` (`id_utilisateur_utilisateur`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+CREATE TABLE IF NOT EXISTS `outil` (
+  `id_outil` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_outil` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_outil`),
+  UNIQUE KEY `nom_outil` (`nom_outil`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Contenu de la table `bibliotheque_tptp`
+-- Contenu de la table `outil`
 --
 
-INSERT INTO `bibliotheque_tptp` (`id_biblio`, `nom_biblio`, `id_utilisateur_utilisateur`) VALUES
-(1, 'TPTP', 0);
+INSERT INTO `outil` (`id_outil`, `nom_outil`) VALUES
+(1, 'zenon'),
+(2, 'zenon modulo');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

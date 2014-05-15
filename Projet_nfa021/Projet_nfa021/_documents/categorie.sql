@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 06 Mai 2014 à 10:44
--- Version du serveur: 5.6.12-log
--- Version de PHP: 5.4.12
+-- Généré le: Mer 14 Mai 2014 à 21:14
+-- Version du serveur: 5.5.24-log
+-- Version de PHP: 5.3.13
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   PRIMARY KEY (`id_categorie`),
   KEY `FK_categorie_id_biblio_bibliotheque_TPTP` (`id_biblio_bibliotheque_TPTP`),
   KEY `FK_categorie_id_utilisateur_utilisateur` (`id_utilisateur_utilisateur`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `categorie`

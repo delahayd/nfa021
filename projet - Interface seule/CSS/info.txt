@@ -1,1 +1,0 @@
-Mettre tous les fichiers .css dans le reperetoire CSS

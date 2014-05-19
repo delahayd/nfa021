@@ -244,7 +244,7 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
                           <div class="form-group">
                                <label class="col-md-4 control-label" for="adresse_mail">Adresse mail</label>  
                                     <div class="col-md-4">
-                                         <input id="adresse_mail" name="adresse_mail" type="text" placeholder="d.delahaye@idf.pleiad.net" class="form-control input-md">
+                                         <input id="adresse_mail" name="adresse_mail" type="email" placeholder="d.delahaye@idf.pleiad.net" class="form-control input-md">
                                     </div>
                           </div>
                             <!--_________________________________________________-->

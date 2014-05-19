@@ -1,7 +1,7 @@
 <?php require_once('Connections/bd_nfa021.php'); ?>
 <?php
 
-
+//print_r($_POST);			//a supprimer quand page OK
 // Date
 $date = date("Y-m-d");	//date au format PhpMyAdmin
 
@@ -91,10 +91,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 				
 	// Inserer ensuite la clé primaire de la date dans la table utilisateur (champ id_date_date)
 	
-		
-if ($_POST['conf_mot_passe'] == $_POST['mot_de_passe'])		// il faut avant d'enregistrer dans la BDD que mot de passe et confirmation mot de passe soit égaux	 ****  OK
+}
+
+
+//si le formulaire d'enregistrement n'est pas vide
+if (!empty ($_POST))
+	{
+	//teste si tous les champs sont remplis
+	if(($_POST['nom'] == "") OR ($_POST['prenom'] == "") OR ($_POST['nom_utilisateur'] == "") OR ($_POST['adresse_mail'] == "") OR ($_POST['mot_de_passe'] == "") OR ($_POST['conf_mot_passe'] == ""))
+		print("<font color =\"red\">FORMULAIRE INCOMPLET - RECOMMENCEZ</font><br>");
+	
+	// il faut avant d'enregistrer dans la BDD que mot de passe et confirmation mot de passe soient égaux	
+	elseif ($_POST['conf_mot_passe'] != $_POST['mot_de_passe'])			 
+				print("<font color =\"red\">MOT DE PASSE ERRONE - RECOMMENCEZ</font>");
+	
+	//sinon si tous les champs sont OK on remplit la BDD
+	else
 			{
-  $insertSQL = sprintf("INSERT INTO utilisateur (nom, prenom, pseudo, email, password, sexe ) VALUES (%s, %s, %s, %s, %s, %s)",
+				$insertSQL = sprintf("INSERT INTO utilisateur (nom, prenom, pseudo, email, password, sexe ) VALUES (%s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['nom'], "text"),
                        GetSQLValueString($_POST['prenom'], "text"),
                        GetSQLValueString($_POST['nom_utilisateur'], "text"),
@@ -102,17 +116,20 @@ if ($_POST['conf_mot_passe'] == $_POST['mot_de_passe'])		// il faut avant d'enre
                        GetSQLValueString($_POST['mot_de_passe'], "text"),
                        GetSQLValueString($_POST['Sexe'], "text"));
 
-  mysql_select_db($database_bd_nfa021, $bd_nfa021);
-  $Result1 = mysql_query($insertSQL, $bd_nfa021) or die(mysql_error());
+				mysql_select_db($database_bd_nfa021, $bd_nfa021);
+				$Result1 = mysql_query($insertSQL, $bd_nfa021) or die(mysql_error());
+				print("<font color =\"green\">UTILISATEUR ENREGISTRE</font>");
 			}
-			else print("MOT DE PASSE ERRONE");
-}
+	}
 
+	
 mysql_select_db($database_bd_nfa021, $bd_nfa021);
 $query_cnxuser = "SELECT pseudo, password FROM utilisateur";
 $cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
 $row_cnxuser = mysql_fetch_assoc($cnxuser);
 $totalRows_cnxuser = mysql_num_rows($cnxuser);
+
+	
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -281,6 +298,7 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
 <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+
 <?php
 mysql_free_result($cnxuser);
 ?>

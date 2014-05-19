@@ -165,11 +165,11 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
                       <li> <a href="contact.php">Contact</a> </li>
                  </ul>
 
-                 <form class="navbar-form pull-right">
+                 <form class="navbar-form pull-right" method = "post" name = "identification">
                      <span style=color:#999;>Se connecter</span>
-                         <input type="text" class="input-small" placeholder="Nom d'utilisateur" style="width:130px" value="<?php echo $row_cnxuser['pseudo']; ?>">
-                         <input type="text" class="input-small" placeholder="Mot de Passe" style="width:130px" value="<?php echo $row_cnxuser['password']; ?>">
-                         <button type="submit" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Connexion</button><br>
+                         <input type="text" name = "pseudo_connexion" class="input-small" placeholder="Nom d'utilisateur" style="width:130px" value="<?php echo $row_cnxuser['pseudo']; ?>">
+                         <input type="password" name = "mot_de_passe" class="input-small" placeholder="Mot de Passe" style="width:130px" value="<?php echo $row_cnxuser['password']; ?>">  <!-- ne pas faire apparaitre le mdp en clair -->
+                         <button type="submit" value = "Connexion" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Connexion</button><br>
 
                           <!-- Lien Mot de passe oublié -->
                           <div style=text-align:right;color:#999; ><a href="motdepasse.php" style=text-decoration:none;> Nom utilisateur ou mot de passe oublie ?</a></div>

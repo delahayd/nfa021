@@ -1,6 +1,7 @@
 <?php require_once('Connections/bd_nfa021.php'); ?>
 <?php
 
+
 // Date
 $date = date("Y-m-d");	//date au format PhpMyAdmin
 
@@ -80,7 +81,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 				VALUES ('$date')";
 				
 			//print($date);   //OK la date est correcte
-	$query_date = mysql_query($bd_nfa021, $sql_date);			
+	//$query_date = mysql_query($bd_nfa021, $sql_date);			//erreur à l'éxécution
 				 
 				
 				
@@ -89,7 +90,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 				WHERE date = $date";
 				
 	// Inserer ensuite la clé primaire de la date dans la table utilisateur (champ id_date_date)
-					
+	
+		
+if ($_POST['conf_mot_passe'] == $_POST['mot_de_passe'])		// il faut avant d'enregistrer dans la BDD que mot de passe et confirmation mot de passe soit égaux	 ****  OK
+			{
   $insertSQL = sprintf("INSERT INTO utilisateur (nom, prenom, pseudo, email, password, sexe ) VALUES (%s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['nom'], "text"),
                        GetSQLValueString($_POST['prenom'], "text"),
@@ -100,6 +104,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 
   mysql_select_db($database_bd_nfa021, $bd_nfa021);
   $Result1 = mysql_query($insertSQL, $bd_nfa021) or die(mysql_error());
+			}
+			else print("MOT DE PASSE ERRONE");
 }
 
 mysql_select_db($database_bd_nfa021, $bd_nfa021);

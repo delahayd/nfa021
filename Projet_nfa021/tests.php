@@ -37,9 +37,15 @@ $cat_problemes = mysql_query($query_cat_problemes, $bd_nfa021) or die(mysql_erro
 $row_cat_problemes = mysql_fetch_assoc($cat_problemes);
 $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 ?>
+
+
 <!DOCTYPE html>
+
+<?php session_start(); ?>
+
 <html lang="fr">
 <head>
+<meta charset="utf-8">
 <title>PROJET-NFA021</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,48 +55,10 @@ $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 <link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
-
-    <body>
-        <div class="container">
-
-        <!--_________________________________________HEADER NAVIGATION DEBUT_________________________________________-->
-            <nav class="navbar navbar-inverse navbar-static-top">
-               <div class="navbar-header" style=height:110px>   
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                    </button>
-
-               <a class="navbar-brand" href="index.php"><img src="img/cnam.png" height="70%">&nbsp &nbsp &nbspPROJET NFA021</a>
-              </div>
-              <div class="collapse navbar-collapse">
-                 <ul class="nav navbar-nav">
-                      <li> <a href="index.php">Accueil</a> </li> 
-                      <li class="active"> <a href="tests.php">Tests</a> </li> 
-                      <li> <a href="statistiques.php">Statistique</a> </li>
-                      <li> <a href="historique.php">Historique</a> </li>
-                      <li> <a href="contact.php">Contact</a> </li>
-                 </ul>
-
-                 <form class="navbar-form pull-right">
-                     <span style=color:#999;>Se connecter</span>
-                         <input type="text" style="width:130px" class="input-small" placeholder="Nom d'utilisateur">
-                         <input type="text" style="width:130px" class="input-small" placeholder="Mot de Passe">
-                         <button type="submit" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Connexion</button><br>
-
-                          <!-- Lien Mot de passe oublié -->
-                          <div style=text-align:right;color:#999; ><a href="mdp_oublie.php" style=text-decoration:none;> Nom utilisateur ou mot de passe oublie ?</a></div>
-                          <!-- _________________________-->
-                   </form>
-              </div>
-            </nav>
-          <!--_________________________________________HEADER NAVIGATION FIN_________________________________________-->
-
-          <!----------------------------------------------------------------------------------------------------------------------->
-
-
-
+ <body>
+	
+		<?php include('menu.php'); ?>
+      
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
             <section class="row">
                 

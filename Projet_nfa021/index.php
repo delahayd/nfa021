@@ -1,4 +1,6 @@
-<?php require_once('Connections/bd_nfa021.php'); ?>
+<?php require_once('Connections/bd_nfa021.php');						//mysql?>
+<?php include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
+
 <?php
 
 //print_r($_POST);			//a supprimer quand page OK
@@ -6,6 +8,8 @@
 $date = date("Y-m-d");	//date au format PhpMyAdmin
 
 
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+		print("<font color =\"green\">". $_SESSION['prenom']." </font><br>"); 
 
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -123,22 +127,74 @@ if (!empty ($_POST) && (isset($_POST['nom'])))
 	}
 
 //traitement du formulaire de connexion n'est pas vide
-elseif (!empty ($_POST))
+elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 		{
-	if(($_POST['pseudo_connexion'] == "") OR ($_POST['password'] == ""))
-			print("<font color =\"red\">CONNEXION ECHOUEE - VEUILLEZ RECOMMENCER</font><br>");				
-		}	
+		if(($_POST['pseudo_connexion'] == "") OR ($_POST['password'] == ""))
+				print("<font color =\"red\">CONNEXION ECHOUEE - Essayez de nouveau</font><br>");		
+
+			elseif(($_POST['pseudo_connexion'] != "") AND ($_POST['password'] != ""))	
+				{
+					$pseudo_connexion = $_POST['pseudo_connexion'];		//pour simplifier requete sql
+					$password = $_POST['password'] ;					//pour simplifier requete sql
+				
 			
+		// comparaison avec la bdd pour pouvoir établir la session	
+		$lien = mysqli_connect($server, $user, $pass, $bdd);					//connexion à la base de données - utilise mysqli
+		mysqli_query($lien, "SET NAMES UTF8");
+		
+		//verifier existence des identifiants - mysqli
+		$sql_verif = "select prenom, pseudo, password from utilisateur where pseudo = '$pseudo_connexion' and password = '$password'";	//requete sql
+		$query_verif = mysqli_query($lien, $sql_verif);								//execution de la requete
+		
+		$resultat = mysqli_fetch_assoc($query_verif);			//stocke le résultat de la requete dans un tableau associatif $resultat
+		
+			if(($resultat["pseudo"] == $pseudo_connexion) AND ($resultat["password"] == $password))
+					{
+					//print("<font color =\"green\">Bonjour ". $resultat['prenom']."</font><br>");
+					//$succes = 1;
+					session_start();
+					$_SESSION["pseudo"]=$resultat["pseudo"];
+					$_SESSION["prenom"]=$resultat["prenom"];
+			
+					//redirige utilisateur vers une page de la section membre
+					header('location: tests.php');
+					}
+						else
+							{
+							//utilisateur non reconnu
+							print("<body onLoad=\"alert\"('Utilisateur non reconnu')\">");
+							print("<font color =\"red\">ACCES REFUSE</font><br>");
+			
+							}	
+					}
 	
-mysql_select_db($database_bd_nfa021, $bd_nfa021);
-$query_cnxuser = "SELECT pseudo, password FROM utilisateur";
-$cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
-$row_cnxuser = mysql_fetch_assoc($cnxuser);
-$totalRows_cnxuser = mysql_num_rows($cnxuser);
+	
+	////if(isset($succes))
+	//{
+	//ouverture de session
+	//session_start();
+	//$_SESSION["pseudo"]=$resultat["pseudo"];
+	//$_SESSION["prenom"]=$resultat["prenom"];
+	//$pseudo=$_SESSION["pseudo"];
+	//print("<span class=\"pseudo\">Bonjour</span>");
+			
+	//affichage du menu
+	//include "menu.php";
+
+	}	
+		
+	
+//mysql_select_db($database_bd_nfa021, $bd_nfa021);
+//$query_cnxuser = "SELECT pseudo, password FROM utilisateur";
+//$cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
+//$row_cnxuser = mysql_fetch_assoc($cnxuser);
+//$totalRows_cnxuser = mysql_num_rows($cnxuser);
 
 	
 ?>
 <!DOCTYPE html>
+
+<?php// print_r($_session); ?>
 <html lang="fr">
 <head>
 <title>PROJET-NFA021</title>
@@ -150,9 +206,8 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
 </head>
 
 
-    <body>
-	
-		<?php include('menu_index.php'); ?>
+ <body>
+	<?php include('menu_index.php'); ?>
 	
 
 
@@ -265,13 +320,9 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
 
         </div>
 
-
-
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
 
-<?php
-mysql_free_result($cnxuser);
-?>
+<?php //mysql_free_result($cnxuser); ?>

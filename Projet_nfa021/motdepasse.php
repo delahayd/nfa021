@@ -12,7 +12,7 @@
 </head>
 
 
-    <body>
+<body>
 	
 	<?php include('menu.php'); ?>
 		  

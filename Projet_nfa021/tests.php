@@ -1,11 +1,16 @@
-<?php require_once('Connections/bd_nfa021.php'); ?>
 <?php
+//require_once('Connections/bd_nfa021.php'); 
+
+include ('Connections/connexion_bdd_mysqli.php');				//mysqli 
+
+
+/*
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
+   $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+ }
 
   $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
 
@@ -38,11 +43,21 @@ $row_cat_problemes = mysql_fetch_assoc($cat_problemes);
 $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 ?>
 
+*/
+
+//on demarre la session
+session_start();
+?>
+
 
 <!DOCTYPE html>
 
-<?php session_start(); ?>
+<!--<?php print_r($_SESSION); 					//	a supprimer une fois la page OK?> -->
 
+<?php
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+	{
+?>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -56,7 +71,7 @@ $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 </head>
 
  <body>
-	
+		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 		<?php include('menu.php'); ?>
       
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
@@ -177,9 +192,6 @@ $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 </fieldset>
 </form>
 
-
-
-
                 </div>
             </section>
          
@@ -200,12 +212,17 @@ $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 
         </div>
 
-
-
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+
 <?php
-mysql_free_result($cat_problemes);
+//mysql_free_result($cat_problemes);
+?>
+
+<?php
+}
+	else print("SESSION NON DEMARREE");
+	include('menu_index.php'); 
 ?>

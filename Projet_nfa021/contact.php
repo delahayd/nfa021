@@ -1,5 +1,14 @@
+<?php 
+//on demarre la session
+session_start();
+ ?>
+
+
 <!DOCTYPE html>
 
+<?php print_r($_SESSION); 					//	a supprimer une fois la page OK
+
+include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
 
 <html lang="fr">
 <head>
@@ -23,17 +32,16 @@
                 
                 <div class="col-lg-12">
                 <form class="form-horizontal">
+	
+	
 <fieldset>
 
-
 <legend>Formulaire de remarques</legend>
-
 
 <div class="control-group">
   <label class="control-label" for="textinput">Nom</label>
   <div class="controls">
     <input id="textinput" name="textinput" type="text" placeholder="Delahaye" class="input-xlarge" required="">
-    
   </div>
 </div>
 
@@ -42,8 +50,7 @@
   <label class="control-label" for="textinput">Email</label>
   <div class="controls">
     <input id="textinput" name="textinput" type="text" placeholder="d.delahaye@idf.pleiad.net" class="input-xlarge" required="">
-    
-  </div>
+   </div>
 </div>
 
 
@@ -78,14 +85,6 @@
 
 </fieldset>
 </form>
-
-
-
-
-
-
-
-
 
                 </div>
             </section>

@@ -1,6 +1,13 @@
+<?php
+//on demarre la session
+ session_start();
+ ?>
+
 <!DOCTYPE html>
 
-<?php session_start(); ?>
+<?php print_r($_SESSION); 					//	a supprimer une fois la page OK
+
+include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
 
 
 <html lang="fr">

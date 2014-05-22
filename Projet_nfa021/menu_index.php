@@ -24,8 +24,6 @@
                  <form class="navbar-form pull-right" method = "post" name = "identification" action = "index.php">
                      <span style=color:#999;>Se connecter</span>
 					 
-					
-						
 					    <input type="text" name = "pseudo_connexion" class="input-small"  style="width:130px" placeholder="Utilisateur">
 				        <input type="password" name = "password" class="input-small"  style="width:130px" placeholder="mot de passe">  <!-- ne pas faire apparaitre le mdp en clair -->
                         <button type="submit" value = "Connexion" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Connexion</button><br>

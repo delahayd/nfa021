@@ -24,7 +24,7 @@
                  <form class="navbar-form pull-right" method = "post" name = "identification" action = "index.php">
                     		
 					<!-- traiter le bouton deconnexion -->
-                        <button type="submit" value = "deconnexion" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Déconnexion</button><br>
+                        <a href = "deconnexion.php" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Déconnexion</a><br>
 				          
                 </form>
               </div>
@@ -32,3 +32,9 @@
           <!--_________________________________________HEADER NAVIGATION FIN_________________________________________-->
 
           <!----------------------------------------------------------------------------------------------------------------------->
+		  
+		  
+		  
+		  
+		  
+		 

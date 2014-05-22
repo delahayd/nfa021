@@ -1,14 +1,17 @@
 <?php 
 //on demarre la session
+include ('Connections/connexion_bdd_mysqli.php');				//mysqli
 session_start();
  ?>
 
-
 <!DOCTYPE html>
 
-<?php print_r($_SESSION); 					//	a supprimer une fois la page OK
+<?php print_r($_SESSION); 					//	a supprimer une fois la page OK ?>
 
-include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
+<?php
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+	{
+?>
 
 <html lang="fr">
 <head>
@@ -106,9 +109,15 @@ include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
 
         </div>
 
+<?php
+	}
+	else print("SESSION NON DEMARREE");
+	include('menu_index.php'); 
+?>
 
-
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-    </body>
-</html>   
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+ </body>
+ 
+</html>

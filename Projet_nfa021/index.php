@@ -4,6 +4,7 @@
 <?php
 
 //print_r($_POST);			//a supprimer quand page OK
+
 // Date
 $date = date("Y-m-d");	//date au format PhpMyAdmin
 

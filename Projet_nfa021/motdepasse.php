@@ -14,7 +14,7 @@
 
 <body>
 	
-	<?php include('menu.php'); ?>
+	<?php include('menu_index.php'); ?>
 		  
 			  
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->

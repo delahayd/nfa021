@@ -1,8 +1,6 @@
 <?php
 //require_once('Connections/bd_nfa021.php'); 
-
 include ('Connections/connexion_bdd_mysqli.php');				//mysqli 
-
 
 /*
 if (!function_exists("GetSQLValueString")) {
@@ -49,9 +47,7 @@ $totalRows_cat_problemes = mysql_num_rows($cat_problemes);
 session_start();
 ?>
 
-
 <!DOCTYPE html>
-
 <!--<?php print_r($_SESSION); 					//	a supprimer une fois la page OK?> -->
 
 <?php
@@ -70,7 +66,7 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 <link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
- <body>
+<body>
 		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 		<?php include('menu.php'); ?>
       
@@ -212,17 +208,17 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 
         </div>
 
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-    </body>
-</html>
-
+		
 <?php
-//mysql_free_result($cat_problemes);
-?>
-
-<?php
-}
+	}
 	else print("SESSION NON DEMARREE");
 	include('menu_index.php'); 
 ?>
+
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+ </body>
+ 
+</html>
+

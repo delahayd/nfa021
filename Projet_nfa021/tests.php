@@ -93,6 +93,19 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
   </div>
 </div>
 
+<div class="control-group">
+  <label class="control-label" for="selectbasic">Sous Categories</label>
+  <div class="controls">
+    <select id="selectbasic" name="selectbasic" class="input-xlarge">
+      <option>Mathematique</option>
+      <option>Geometrie</option>
+      <option>Physique</option>
+	  
+      <option>etc...</option>
+    </select>
+  </div>
+</div>
+
 
 <div class="control-group">
   <label class="control-label" for="selectmultiple">Problemes proposes</label>

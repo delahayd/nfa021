@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<title>PROJET-NFA021</title>
-<!-- On ouvre la fenêtre à la largeur de l'écran -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Intégration du CSS Bootstrap -->
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-<link href="css/style.css" rel="stylesheet" media="screen"> 
+	<meta charset="utf-8">
+	<title>PROJET-NFA021</title>
+	<!-- On ouvre la fenêtre à la largeur de l'écran -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Intégration du CSS Bootstrap -->
+	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
 

@@ -6,20 +6,18 @@ session_start();
 
 <!DOCTYPE html>
 
-<?php print_r($_SESSION); 	//	a supprimer une fois la page OK ?>
+<?php //print_r($_SESSION); 	//	a supprimer une fois la page OK ?>
 
 
 
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<title>PROJET-NFA021</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-<link href="css/style.css" rel="stylesheet" media="screen"> 
+	<meta charset="utf-8">
+	<title>PROJET-NFA021</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
 <?php
@@ -61,8 +59,11 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 
 <?php
 	}
-	else print("SESSION NON DEMARREE");
-	include('menu_index.php'); 
+	else 
+	{
+		print("<font color =\"red\">SESSION NON DEMARREE</font>");
+		include('menu_index.php'); 
+	} 
 ?>
 
 	<script src="js/jquery-1.8.3.min.js"></script>

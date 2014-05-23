@@ -184,34 +184,31 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 
 	}	
 		
-	
-//mysql_select_db($database_bd_nfa021, $bd_nfa021);
-//$query_cnxuser = "SELECT pseudo, password FROM utilisateur";
-//$cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
-//$row_cnxuser = mysql_fetch_assoc($cnxuser);
-//$totalRows_cnxuser = mysql_num_rows($cnxuser);
-
+// utile pour utiliser le mode de connexion mysql
+mysql_select_db($database_bd_nfa021, $bd_nfa021);
+$query_cnxuser = "SELECT pseudo, password FROM utilisateur";
+$cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
+$row_cnxuser = mysql_fetch_assoc($cnxuser);
+$totalRows_cnxuser = mysql_num_rows($cnxuser);
 	
 ?>
+
 <!DOCTYPE html>
 
 <?php// print_r($_session); ?>
 <html lang="fr">
 <head>
-<title>PROJET-NFA021</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-<link href="css/style.css" rel="stylesheet" media="screen"> 
+	<title>PROJET-NFA021</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
-
 
  <body>
 	<?php include('menu_index.php'); ?>
 	
-
-
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
             <article class="row">
                 
@@ -326,4 +323,4 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
     </body>
 </html>
 
-<?php //mysql_free_result($cnxuser); ?>
+<?php //mysql_free_result($cnxuser); 			//Cette extension est obsolète depuis PHP 5.5.0 ?>

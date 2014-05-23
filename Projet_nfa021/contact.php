@@ -6,12 +6,9 @@ session_start();
 
 <!DOCTYPE html>
 
-<?php print_r($_SESSION); 					//	a supprimer une fois la page OK ?>
+<?php //print_r($_SESSION); 					//	a supprimer une fois la page OK ?>
 
-<?php
-if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-	{
-?>
+
 
 <html lang="fr">
 <head>
@@ -25,8 +22,11 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 <link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
-
-    <body>
+ <body>
+ <?php
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+	{
+?>
 	
 			<?php include('menu.php'); ?>
 					
@@ -111,8 +111,11 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 
 <?php
 	}
-	else print("SESSION NON DEMARREE");
-	include('menu_index.php'); 
+	else
+		{
+		print("<font color =\"red\">SESSION NON DEMARREE</font>");
+		include('menu_index.php'); 
+		}
 ?>
 
 	<script src="js/jquery-1.8.3.min.js"></script>

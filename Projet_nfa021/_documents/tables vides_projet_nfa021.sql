@@ -15,7 +15,7 @@ CREATE TABLE utilisateur(
         id_date        Int NOT NULL ,
         PRIMARY KEY (id_utilisateur ) ,
         UNIQUE (pseudo ,email )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE outil(
@@ -23,7 +23,7 @@ CREATE TABLE outil(
         nom_outil Varchar (50) NOT NULL ,
         PRIMARY KEY (id_outil ) ,
         UNIQUE (nom_outil )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE version(
@@ -31,7 +31,7 @@ CREATE TABLE version(
         version_biblio Varchar (25) ,
         id_biblio      Int NOT NULL ,
         PRIMARY KEY (id_version )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE probleme(
@@ -41,7 +41,7 @@ CREATE TABLE probleme(
         id_utilisateur    Int NOT NULL ,
         PRIMARY KEY (id_probleme ) ,
         UNIQUE (nom_probleme )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE bibliotheque_TPTP(
@@ -49,14 +49,14 @@ CREATE TABLE bibliotheque_TPTP(
         nom_biblio     Varchar (25) NOT NULL ,
         id_utilisateur Int NOT NULL ,
         PRIMARY KEY (id_biblio )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE date(
         id_date     int (11) Auto_increment  NOT NULL ,
         date_action Date NOT NULL ,
         PRIMARY KEY (id_date )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE temps_limite(
@@ -64,7 +64,7 @@ CREATE TABLE temps_limite(
         temps           Double ,
         PRIMARY KEY (id_temps_limite ) ,
         UNIQUE (temps )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE memoire_limite(
@@ -72,14 +72,14 @@ CREATE TABLE memoire_limite(
         memoire    Double ,
         PRIMARY KEY (id_memoire ) ,
         UNIQUE (memoire )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE temps_execution(
         id_temps_execution int (11) Auto_increment  NOT NULL ,
         chrono             Double NOT NULL ,
         PRIMARY KEY (id_temps_execution )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE preuve(
@@ -88,7 +88,7 @@ CREATE TABLE preuve(
         id_test            Int NOT NULL ,
         id_temps_execution Int NOT NULL ,
         PRIMARY KEY (id_preuve )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE appel(
@@ -98,7 +98,7 @@ CREATE TABLE appel(
         id_memoire      Int NOT NULL ,
         id_utilisateur  Int NOT NULL ,
         PRIMARY KEY (id_appel )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE test(
@@ -109,7 +109,7 @@ CREATE TABLE test(
         id_date     Int NOT NULL ,
         id_probleme Int NOT NULL ,
         PRIMARY KEY (id_test )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE categorie(
@@ -118,7 +118,7 @@ CREATE TABLE categorie(
         id_biblio      Int NOT NULL ,
         id_utilisateur Int NOT NULL ,
         PRIMARY KEY (id_categorie )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE version_outil(
@@ -126,7 +126,7 @@ CREATE TABLE version_outil(
         nom_version_outil Varchar (25) ,
         PRIMARY KEY (id_version_outil ) ,
         UNIQUE (nom_version_outil )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE sous_categorie(
@@ -134,21 +134,21 @@ CREATE TABLE sous_categorie(
         nom_sous_categorie Varchar (10) ,
         id_categorie       Int NOT NULL ,
         PRIMARY KEY (id_sous_categorie )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE editer(
         id_outil         Int NOT NULL ,
         id_version_outil Int NOT NULL ,
         PRIMARY KEY (id_outil ,id_version_outil )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 
 CREATE TABLE executer(
         id_outil Int NOT NULL ,
         id_appel Int NOT NULL ,
         PRIMARY KEY (id_outil ,id_appel )
-)ENGINE=InnoDB;
+)ENGINE=MyISAM;
 
 ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_id_date FOREIGN KEY (id_date) REFERENCES date(id_date);
 ALTER TABLE version ADD CONSTRAINT FK_version_id_biblio FOREIGN KEY (id_biblio) REFERENCES bibliotheque_TPTP(id_biblio);

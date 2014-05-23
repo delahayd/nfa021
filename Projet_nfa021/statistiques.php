@@ -26,7 +26,7 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 ?>
 
     <body>
-	
+		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 		<?php include('menu.php'); ?>
       
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->

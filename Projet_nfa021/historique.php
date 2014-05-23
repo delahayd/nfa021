@@ -8,10 +8,7 @@ session_start();
 
 <?php print_r($_SESSION); 					//	a supprimer une fois la page OK ?>
 
-<?php
-if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-	{
-?>
+
 
 <html lang="fr">
 <head>
@@ -25,6 +22,10 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 <link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
+<?php
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+	{
+?>
 
     <body>
 	

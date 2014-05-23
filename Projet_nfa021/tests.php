@@ -50,10 +50,7 @@ session_start();
 <!DOCTYPE html>
 <!--<?php print_r($_SESSION); 					//	a supprimer une fois la page OK?> -->
 
-<?php
-if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-	{
-?>
+
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -65,6 +62,13 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 <link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
+
+
+<?php
+if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+	{
+?>
+
 
 <body>
 		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>

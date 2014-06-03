@@ -1,6 +1,10 @@
+<?php require_once('Connections/bd_nfa021.php');            //mysql?>
+<?php include ('Connections/connexion_bdd_mysqli.php');       //mysqli ?>
+
+
 <?php
 //require_once('Connections/bd_nfa021.php'); 					//mysql
-include ('Connections/connexion_bdd_mysqli.php');				//mysqli 
+include ('Connections/bd_nfa021.php');				//mysqli 
 
 /*
 if (!function_exists("GetSQLValueString")) {
@@ -75,52 +79,88 @@ session_start();
             <section class="row">
                 
                 <div class="col-lg-6">
-<form class="form-horizontal">
+
+
+
+<form class="form-horizontal" method="POST" name="test">
 <fieldset>
 
 
 <legend>1- Selectionnez les problemes a tester.</legend>
 
 
-<div class="control-group">
-  <label class="control-label" for="selectbasic">Categories</label>
-  <div class="controls">
-    <select id="selectbasic" name="selectbasic" class="input-xlarge">
-      <option>Mathematique</option>
-      <option>Geometrie</option>
-      <option>Physique</option>
-      <option>etc...</option>
-    </select>
-  </div>
-</div>
+
 
 <div class="control-group">
   <label class="control-label" for="selectbasic">Sous Categories</label>
   <div class="controls">
     <select id="selectbasic" name="selectbasic" class="input-xlarge">
-      <option>Mathematique</option>
-      <option>Geometrie</option>
-      <option>Physique</option>
+
+<?php   
+    
+	  //$sql_verif = 'SELECT nom_sous_categorie,id_sous_categorie FROM sous_categorie';  //requete sql - recupere toutes les sous categories (même les vides')
 	  
-      <option>etc...</option>
-    </select>
+	  $sql_verif='SELECT DISTINCT nom_sous_categorie,sg.id_sous_categorie
+					FROM sous_categorie AS sg, probleme AS p
+					WHERE sg.id_sous_categorie = p.id_sous_categorie';					//requete sql - recupere les sous categories NON VIDES uniquement
+				
+    
+      $req = mysql_query($sql_verif) or die('Erreur SQL !<br />'.$sql_verif.'<br />'.mysql_error()); 
+    
+            while ($data = mysql_fetch_array($req)){ 
+             ?><option value="<?php echo $data['id_sous_categorie'];?>"><?php echo $data['nom_sous_categorie'];?></option><?php
+    }
+
+
+
+    ?>
+   
+
+
+
+    </select><input type="submit" name="test" value="Chercher">
+   
   </div>
 </div>
 
 
+
+</fieldset>
+</form>
+
+
+
+
+
+
+<!-------------------------------------------------------------------------------------------------------->
+
+<form class="form-horizontal" method="POST" name="singlebutton">
 <div class="control-group">
   <label class="control-label" for="selectmultiple">Problemes proposes</label>
   <div class="controls">
-    <select id="selectmultiple" name="selectmultiple" class="input-xlarge" multiple="multiple">
-      <option>Probleme 1</option>
-      <option>Probleme 2</option>
-      <option>Probleme 3</option>
-      <option>Probleme 4</option>
-      <option>Probleme 5</option>
-      <option>Probleme 6</option>
-      <option>Probleme 7</option>
-      <option>Probleme 8</option>
-      <option>Probleme 9</option>
+
+
+    <select id="selectmultiple" name="selectmultiple[]" class="input-xlarge" multiple="multiple" style=width:100%;height:285px;>
+<?php   
+
+if(isset($_POST['test'])) {
+      $a = $_POST['selectbasic'];
+ 
+
+
+
+      $sql_verif1 = 'SELECT nom_probleme FROM probleme WHERE id_sous_categorie='.$a.' ';  //requete sql
+      $req1 = mysql_query($sql_verif1) or die('Erreur SQL !<br />'.$sql_verif1.'<br />'.mysql_error()); 
+    
+            while ($data = mysql_fetch_array($req1)){ 
+             ?><option value="<?php echo $data['nom_probleme'];?>"><?php echo $data['nom_probleme'];?></option><?php
+    }
+  }
+    ?>
+
+
+     
     </select>
   </div>
 </div>
@@ -129,12 +169,32 @@ session_start();
 <div class="control-group">
   <label class="control-label" for="singlebutton"></label>
   <div class="controls">
-    <button id="singlebutton" name="singlebutton" class="btn btn-info">Valider</button>
+    <button id="singlebutton" name="singlebutton" class="btn btn-info">Ajouter</button>
   </div>
 </div>
 
+<?php 
+      
+      if(isset($_POST['singlebutton'])){ 
+
+        $problemes =$_POST['selectmultiple'];
+
+          $a=count($problemes);
+         
+         for ($i=0; $i <$a ; $i++) { 
+         
+          
+          $sql='INSERT INTO problemes_choisies VALUES ("",1,"'.$problemes[$i].'",1,NOW(),NOW())';
+          mysql_query ($sql) or die ('Erreur SQL !'.$sql.'<br />'.mysql_error());
+ }
+
+
+}
+?>
+
 </fieldset>
 </form> 
+<!-------------------------------------------------------------------------------------------------------->
 
                 </div>
 
@@ -151,11 +211,24 @@ session_start();
   <label class="control-label" for="selectmultiple">Problemes selectionnes</label>
   <div class="controls">
     <select id="selectmultiple" name="selectmultiple" class="input-xlarge" multiple="multiple">
-      <option>Probleme 3</option>
-      <option>Probleme 5</option>
-      <option>Probleme 7</option>
-      <option>Probleme 8</option>
-      <option>Probleme 9</option>
+      <?php 
+            //Fonctions
+
+            //Fonctions
+
+
+
+     $sql='SELECT probleme FROM problemes_choisies WHERE id_operation="1"';
+          $req = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error()); 
+    
+  while ($data = mysql_fetch_array($req)){ 
+             ?><option selected="selected" value="<?php echo $data['probleme'];?>"> <?php echo $data['probleme'];?></option><?php
+    
+  }
+    ?>
+
+      ?>
+
     </select>
   </div>
 </div>
@@ -164,10 +237,24 @@ session_start();
 <div class="control-group">
   <label class="control-label" for="Selection des outils">Outils</label>
   <div class="controls">
-    <select id="Selection des outils" name="Selection des outils" class="input-xlarge">
+    <select id="outils" name="outils" class="input-xlarge">
       <option>Zenon</option>
       <option>Zenon Modulo</option>
       <option>Zenon et Zenon Modulo</option>
+    </select>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="Nombre de coeurs">Nombre de coeurs</label>
+  <div class="controls">
+    <select id="nbre_de_coeur" name="nbre_de_coeur" class="input-xlarge">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
     </select>
   </div>
 </div>

@@ -1,50 +1,22 @@
+
 <?php require_once('Connections/bd_nfa021.php');						//mysql?>
-<?php include ('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
+<?php include('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
+<?php include('fonctions.php');								//inclu le fichier fonctions.php à la page	?>
 
 <?php
+$lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysql
+
 
 //print_r($_POST);			//a supprimer quand page OK
 
-// Date
 $date = date("Y-m-d");	//date au format PhpMyAdmin
-
 
 if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 		print("<font color =\"green\">". $_SESSION['prenom']." </font><br>"); 
 
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
-
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
 
 if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 			//GetSQLValueString obsolète 
 {
   if (PHP_VERSION < 6) {
     $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
@@ -81,22 +53,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 
-	// enregistre la date dans la table date
-	$sql_date = "INSERT INTO date (date_action)
-				VALUES ('$date')";
-				
-			//print($date);   //OK la date est correcte
-	//$query_date = mysql_query($bd_nfa021, $sql_date);			//erreur à l'éxécution
-				 
-				
-				
-	// récupere la clé primaire de la date dans la table date
-	$sql_pk = "SELECT id_date
-				WHERE date = $date";
-				
-	// Inserer ensuite la clé primaire de la date dans la table utilisateur (champ id_date_date)
-	
-}
+// enregistre la date dans la table date - fonction dans la page fonctions.php
+	EnregistreDate($lien, $date);				
+	}
 
 
 //si le formulaire d'enregistrement n'est pas vide
@@ -110,23 +69,38 @@ if (!empty ($_POST) && (isset($_POST['nom'])))
 	elseif ($_POST['conf_mot_passe'] != $_POST['mot_de_passe'])			 
 				print("<font color =\"red\">MOT DE PASSE ERRONE - RECOMMENCEZ</font>");
 	
-	//sinon si tous les champs sont OK on remplit la BDD
+	//sinon si tous les champs sont OK on remplit la BDD en incluant la clé primaire de la date dans la table utilisateur
 	else
 			{
-				$insertSQL = sprintf("INSERT INTO utilisateur (nom, prenom, pseudo, email, password, sexe ) VALUES (%s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['nom'], "text"),
-                       GetSQLValueString($_POST['prenom'], "text"),
-                       GetSQLValueString($_POST['nom_utilisateur'], "text"),
-                       GetSQLValueString($_POST['adresse_mail'], "text"),
-                       GetSQLValueString($_POST['mot_de_passe'], "text"),
-                       GetSQLValueString($_POST['Sexe'], "text"));
+			// récupere la clé primaire de la date (date_action) dans la table date dont la date est la date du jour
+				$sql_pk = "SELECT id_date
+							FROM date
+							WHERE date_action = '$date'";			
+	
+				$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
 
-				mysql_select_db($database_bd_nfa021, $bd_nfa021);
-				$Result1 = mysql_query($insertSQL, $bd_nfa021) or die(mysql_error());
-				print("<font color =\"green\">UTILISATEUR ENREGISTRE</font>");
-			}
-	}
+				while($donnees = mysqli_fetch_assoc($query_pk))	
+						$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
+					
+			
+			// enregistrement de l'utilisateur dans la DBB
+				$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, id_date)
+								VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]',$pk_date_inscription)";  
+					
+				try{				
+					$query_insert = mysqli_query($lien, $sql_insert);
+					}catch (Exception $e){ 
+							print($e.'Une erreur est survenue ! <br> <a href="index.php" >Retour à l\'accueil</a>');}
+				
+				
+			
+			}//fin else
+				
+	} //fin if
+	//} ????
 
+	
+	
 //traitement du formulaire de connexion n'est pas vide
 elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 		{
@@ -236,11 +210,11 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
                                 <label class="col-md-4 control-label" for="Sexe">Sexe</label>
                                    <div class="col-md-4"> 
                                         <label class="radio-inline" for="Sexe-0">
-                                           <input type="radio" name="Sexe" id="Sexe-0" value="homme" checked="checked">
+                                           <input type="radio" name="Sexe" id="Sexe-0" value="H" checked="checked">
                                             Homme
                                         </label> 
                                         <label class="radio-inline" for="Sexe-1">
-                                           <input type="radio" name="Sexe" id="Sexe-1" value="femme">
+                                           <input type="radio" name="Sexe" id="Sexe-1" value="F">
                                             Femme
                                         </label>
                                   </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Ven 23 Mai 2014 à 11:23
+-- Généré le: Mer 04 Juin 2014 à 21:42
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -93,7 +93,8 @@ INSERT INTO `categorie` (`id_categorie`, `nom_categorie`, `id_biblio_bibliothequ
 CREATE TABLE IF NOT EXISTS `date` (
   `id_date` int(11) NOT NULL AUTO_INCREMENT,
   `date_action` date NOT NULL,
-  PRIMARY KEY (`id_date`)
+  PRIMARY KEY (`id_date`),
+  UNIQUE KEY `date_action` (`date_action`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -6997,8 +6998,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `sexe` char(1) NOT NULL,
   `id_date` int(11) NOT NULL,
   PRIMARY KEY (`id_utilisateur`),
-  UNIQUE KEY `pseudo` (`pseudo`,`email`),
-  KEY `FK_utilisateur_id_date` (`id_date`)
+  UNIQUE KEY `pseudo` (`pseudo`,`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

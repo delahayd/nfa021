@@ -13,8 +13,7 @@ CREATE TABLE utilisateur(
         password       Varchar (25) NOT NULL ,
         sexe           Char (1) NOT NULL ,
         id_date        Int NOT NULL ,
-        PRIMARY KEY (id_utilisateur ) ,
-        UNIQUE (pseudo ,email )
+        PRIMARY KEY (id_utilisateur )
 )ENGINE=MyISAM;
 
 
@@ -55,7 +54,8 @@ CREATE TABLE bibliotheque_TPTP(
 CREATE TABLE date(
         id_date     int (11) Auto_increment  NOT NULL ,
         date_action Date NOT NULL ,
-        PRIMARY KEY (id_date )
+        PRIMARY KEY (id_date ) ,
+        UNIQUE (date_action )
 )ENGINE=MyISAM;
 
 
@@ -97,6 +97,7 @@ CREATE TABLE appel(
         id_temps_limite Int NOT NULL ,
         id_memoire      Int NOT NULL ,
         id_utilisateur  Int NOT NULL ,
+        id_coeur        Int ,
         PRIMARY KEY (id_appel )
 )ENGINE=MyISAM;
 
@@ -137,6 +138,13 @@ CREATE TABLE sous_categorie(
 )ENGINE=MyISAM;
 
 
+CREATE TABLE coeur(
+        id_coeur int (11) Auto_increment  NOT NULL ,
+        nombre   Int ,
+        PRIMARY KEY (id_coeur )
+)ENGINE=MyISAM;
+
+
 CREATE TABLE editer(
         id_outil         Int NOT NULL ,
         id_version_outil Int NOT NULL ,
@@ -160,6 +168,7 @@ ALTER TABLE preuve ADD CONSTRAINT FK_preuve_id_temps_execution FOREIGN KEY (id_t
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_temps_limite FOREIGN KEY (id_temps_limite) REFERENCES temps_limite(id_temps_limite);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_memoire FOREIGN KEY (id_memoire) REFERENCES memoire_limite(id_memoire);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
+ALTER TABLE appel ADD CONSTRAINT FK_appel_id_coeur FOREIGN KEY (id_coeur) REFERENCES coeur(id_coeur);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_preuve FOREIGN KEY (id_preuve) REFERENCES preuve(id_preuve);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_outil FOREIGN KEY (id_outil) REFERENCES outil(id_outil);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_date FOREIGN KEY (id_date) REFERENCES date(id_date);

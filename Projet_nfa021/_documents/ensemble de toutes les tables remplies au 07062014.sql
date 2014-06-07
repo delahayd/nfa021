@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 04 Juin 2014 à 21:42
+-- Généré le: Sam 07 Juin 2014 à 14:16
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -34,10 +34,12 @@ CREATE TABLE IF NOT EXISTS `appel` (
   `id_temps_limite` int(11) NOT NULL,
   `id_memoire` int(11) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
+  `id_coeur` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_appel`),
   KEY `FK_appel_id_temps_limite` (`id_temps_limite`),
   KEY `FK_appel_id_memoire` (`id_memoire`),
-  KEY `FK_appel_id_utilisateur` (`id_utilisateur`)
+  KEY `FK_appel_id_utilisateur` (`id_utilisateur`),
+  KEY `FK_appel_id_coeur` (`id_coeur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -83,6 +85,32 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 
 INSERT INTO `categorie` (`id_categorie`, `nom_categorie`, `id_biblio_bibliotheque_TPTP`, `id_utilisateur_utilisateur`) VALUES
 (1, 'FOF', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `coeur`
+--
+
+CREATE TABLE IF NOT EXISTS `coeur` (
+  `id_coeur` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_coeur`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Contenu de la table `coeur`
+--
+
+INSERT INTO `coeur` (`id_coeur`, `nombre`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8);
 
 -- --------------------------------------------------------
 
@@ -6998,7 +7026,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `sexe` char(1) NOT NULL,
   `id_date` int(11) NOT NULL,
   PRIMARY KEY (`id_utilisateur`),
-  UNIQUE KEY `pseudo` (`pseudo`,`email`)
+  KEY `FK_utilisateur_id_date` (`id_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

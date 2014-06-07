@@ -62,48 +62,74 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 if (!empty ($_POST) && (isset($_POST['nom'])))
 	{
 	//teste si tous les champs sont remplis
-	if(($_POST['nom'] == "") OR ($_POST['prenom'] == "") OR ($_POST['nom_utilisateur'] == "") OR ($_POST['adresse_mail'] == "") OR ($_POST['mot_de_passe'] == "") OR ($_POST['conf_mot_passe'] == ""))
-		print("<font color =\"red\">FORMULAIRE INCOMPLET - RECOMMENCEZ</font><br>");					//dans formulaire d'inscription
+		if(($_POST['nom'] == "") OR ($_POST['prenom'] == "") OR ($_POST['nom_utilisateur'] == "") OR ($_POST['adresse_mail'] == "") OR ($_POST['mot_de_passe'] == "") OR ($_POST['conf_mot_passe'] == ""))
+			print("<font color =\"red\">FORMULAIRE INCOMPLET - RECOMMENCEZ</font><br>");					//dans formulaire d'inscription
+			
+			
+	// il faut verifier avant d'enegistrer dans la BDD que le nom d'utilisateur (pseudo) ne soit  pas déjà utilisé
+		if(  $_POST['nom_utilisateur']!="" AND  $_POST['adresse_mail']!="" AND $_POST['conf_mot_passe'] !="" AND $_POST['mot_de_passe']!="")
+			{
+				$pseudo = $_POST['nom_utilisateur'];
+				$sql_nb_pseudo = "SELECT pseudo FROM utilisateur WHERE pseudo = '$pseudo'";
+				$query_nb_pseudo = mysqli_query($lien, $sql_nb_pseudo);			//execution de la requete
+				$nb_pseudo =  mysqli_num_rows($query_nb_pseudo);				//compteur de pseudos identiques
+				
+				if ($nb_pseudo >0)
+					print("<font color =\"red\">CE PSEUDO EXISTE DEJA - VEUILLEZ EN CHOISIR UN AUTRE</font><br>");
+					
+	
+	// il faut verifier avant d'enegistrer dans la BDD que l'adresse mail  n'est pas déjà utilisée
+	
+				$email = $_POST['adresse_mail'];
+				$sql_nb_email = "SELECT email FROM utilisateur WHERE email = '$email'";
+				$query_nb_email = mysqli_query($lien, $sql_nb_email);			//execution de la requete
+				$nb_email =  mysqli_num_rows($query_nb_email);					//compteur de mails identiques
+				
+				if ($nb_email >0)
+					print("<font color =\"red\">E-MAIL DEJA UTILISE - VEUILLEZ RECOMMENCER</font><br>");
+		
+		
 		
 	// il faut avant d'enregistrer dans la BDD que mot de passe et confirmation mot de passe soient égaux	
-	elseif ($_POST['conf_mot_passe'] != $_POST['mot_de_passe'])			 
+		if ($_POST['conf_mot_passe'] != $_POST['mot_de_passe'])			 
 				print("<font color =\"red\">MOT DE PASSE ERRONE - RECOMMENCEZ</font>");
+		
 	
-	//sinon si tous les champs sont OK on remplit la BDD en incluant la clé primaire de la date dans la table utilisateur
-	else
-			{
-			// récupere la clé primaire de la date (date_action) dans la table date dont la date est la date du jour
-				$sql_pk = "SELECT id_date
-							FROM date
-							WHERE date_action = '$date'";			
-	
-				$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
+	//sinon si tous les champs sont OK et que les 2 compteurs sont à 0 on remplit la BDD en incluant la clé primaire de la date dans la table utilisateur
+			elseif ($nb_pseudo ==0 AND $nb_email == 0 AND ($_POST['conf_mot_passe'] == $_POST['mot_de_passe']))
+					{
+					// récupere la clé primaire de la date (date_action) dans la table date dont la date est la date du jour
+							$sql_pk = "SELECT id_date
+										FROM date
+										WHERE date_action = '$date'";			
+						
+							$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
 
-				while($donnees = mysqli_fetch_assoc($query_pk))	
-						$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
-					
+							while($donnees = mysqli_fetch_assoc($query_pk))	
+								$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
+										
+								
+					// enregistrement de l'utilisateur dans la DBB
+							$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, id_date)
+											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]',$pk_date_inscription)";  
+										
+							try{				
+								$query_insert = mysqli_query($lien, $sql_insert);
+								print("<font color =\"green\">VOTRE INSCRIPTION EST ENREGISTREE</font>");
+								}catch (Exception $e){ 
+										print($e.'Une erreur est survenue ! <br> <a href="index.php" >Retour à l\'accueil</a>');}
+													
+					}//fin elseif
+			}// fin if 	
 			
-			// enregistrement de l'utilisateur dans la DBB
-				$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, id_date)
-								VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]',$pk_date_inscription)";  
-					
-				try{				
-					$query_insert = mysqli_query($lien, $sql_insert);
-					}catch (Exception $e){ 
-							print($e.'Une erreur est survenue ! <br> <a href="index.php" >Retour à l\'accueil</a>');}
-				
-				
-			
-			}//fin else
-				
 	} //fin if
-	//} ????
+
 
 	
 	
 //traitement du formulaire de connexion n'est pas vide
 elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
-		{
+	{
 		if(($_POST['pseudo_connexion'] == "") OR ($_POST['password'] == ""))
 				print("<font color =\"red\">CONNEXION ECHOUEE - Essayez de nouveau</font><br>");		
 
@@ -141,7 +167,7 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 							print("<font color =\"red\">ACCES REFUSE</font><br>");
 			
 							}	
-					}
+				}
 	
 	
 	////if(isset($succes))

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 11 Juin 2014 à 13:53
+-- Généré le: Jeu 12 Juin 2014 à 22:18
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -31,15 +31,9 @@ USE `projet_nfa021`;
 CREATE TABLE IF NOT EXISTS `appel` (
   `id_appel` int(11) NOT NULL AUTO_INCREMENT,
   `commentaire` text,
-  `id_temps_limite` int(11) NOT NULL,
-  `id_memoire` int(11) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
-  `id_coeur` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_appel`),
-  KEY `FK_appel_id_temps_limite` (`id_temps_limite`),
-  KEY `FK_appel_id_memoire` (`id_memoire`),
-  KEY `FK_appel_id_utilisateur` (`id_utilisateur`),
-  KEY `FK_appel_id_coeur` (`id_coeur`)
+  KEY `FK_appel_id_utilisateur` (`id_utilisateur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -89,32 +83,6 @@ INSERT INTO `categorie` (`id_categorie`, `nom_categorie`, `id_biblio_bibliothequ
 -- --------------------------------------------------------
 
 --
--- Structure de la table `coeur`
---
-
-CREATE TABLE IF NOT EXISTS `coeur` (
-  `id_coeur` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_coeur`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Contenu de la table `coeur`
---
-
-INSERT INTO `coeur` (`id_coeur`, `nombre`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `date`
 --
 
@@ -124,19 +92,6 @@ CREATE TABLE IF NOT EXISTS `date` (
   PRIMARY KEY (`id_date`),
   UNIQUE KEY `date_action` (`date_action`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `editer`
---
-
-CREATE TABLE IF NOT EXISTS `editer` (
-  `id_outil` int(11) NOT NULL,
-  `id_version_outil` int(11) NOT NULL,
-  PRIMARY KEY (`id_outil`,`id_version_outil`),
-  KEY `FK_editer_id_version_outil` (`id_version_outil`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -154,25 +109,13 @@ CREATE TABLE IF NOT EXISTS `executer` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `memoire_limite`
---
-
-CREATE TABLE IF NOT EXISTS `memoire_limite` (
-  `id_memoire` int(11) NOT NULL AUTO_INCREMENT,
-  `memoire` double DEFAULT NULL,
-  PRIMARY KEY (`id_memoire`),
-  UNIQUE KEY `memoire` (`memoire`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `outil`
 --
 
 CREATE TABLE IF NOT EXISTS `outil` (
   `id_outil` int(11) NOT NULL AUTO_INCREMENT,
   `nom_outil` varchar(50) NOT NULL,
+  `version` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id_outil`),
   UNIQUE KEY `nom_outil` (`nom_outil`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -6951,19 +6894,6 @@ INSERT INTO `sous_categorie` (`id_sous_categorie`, `nom_sous_categorie`, `id_cat
 -- --------------------------------------------------------
 
 --
--- Structure de la table `temps_limite`
---
-
-CREATE TABLE IF NOT EXISTS `temps_limite` (
-  `id_temps_limite` int(11) NOT NULL AUTO_INCREMENT,
-  `temps` double DEFAULT NULL,
-  PRIMARY KEY (`id_temps_limite`),
-  UNIQUE KEY `temps` (`temps`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `test`
 --
 
@@ -6972,6 +6902,9 @@ CREATE TABLE IF NOT EXISTS `test` (
   `nom_test` varchar(100) DEFAULT NULL,
   `preuve_trouvee` tinyint(1) DEFAULT NULL,
   `temps_execution` varchar(25) DEFAULT NULL,
+  `nb_coeur` int(11) DEFAULT NULL,
+  `temps_limite` double DEFAULT NULL,
+  `memoire_limite` double DEFAULT NULL,
   `id_outil` int(11) NOT NULL,
   `id_date` int(11) NOT NULL,
   `id_probleme` int(11) NOT NULL,
@@ -6999,33 +6932,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_date` int(11) NOT NULL,
   PRIMARY KEY (`id_utilisateur`),
   KEY `FK_utilisateur_id_date` (`id_date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `version`
---
-
-CREATE TABLE IF NOT EXISTS `version` (
-  `id_version` int(11) NOT NULL AUTO_INCREMENT,
-  `version_biblio` varchar(25) DEFAULT NULL,
-  `id_biblio` int(11) NOT NULL,
-  PRIMARY KEY (`id_version`),
-  KEY `FK_version_id_biblio` (`id_biblio`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `version_outil`
---
-
-CREATE TABLE IF NOT EXISTS `version_outil` (
-  `id_version_outil` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_version_outil` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`id_version_outil`),
-  UNIQUE KEY `nom_version_outil` (`nom_version_outil`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

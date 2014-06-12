@@ -32,13 +32,9 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 					
             <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
             <section class="row" style=text-align:center;>
-                
                 <div class="col-lg-12">
                 <form class="form-horizontal">
-	
-	
 <fieldset>
-
 <legend>Formulaire de remarques</legend>
 
 <div class="control-group">

@@ -75,6 +75,22 @@ CREATE TABLE memoire_limite(
 )ENGINE=MyISAM;
 
 
+CREATE TABLE temps_execution(
+        id_temps_execution int (11) Auto_increment  NOT NULL ,
+        chrono             Double NOT NULL ,
+        PRIMARY KEY (id_temps_execution )
+)ENGINE=MyISAM;
+
+
+CREATE TABLE preuve(
+        id_preuve          int (11) Auto_increment  NOT NULL ,
+        trouve             Bool NOT NULL ,
+        id_test            Int NOT NULL ,
+        id_temps_execution Int NOT NULL ,
+        PRIMARY KEY (id_preuve )
+)ENGINE=MyISAM;
+
+
 CREATE TABLE appel(
         id_appel        int (11) Auto_increment  NOT NULL ,
         commentaire     Text ,
@@ -87,13 +103,12 @@ CREATE TABLE appel(
 
 
 CREATE TABLE test(
-        id_test         int (11) Auto_increment  NOT NULL ,
-        nom_test        Varchar (100) ,
-        preuve_trouvee  Bool ,
-        temps_execution Varchar (25) ,
-        id_outil        Int NOT NULL ,
-        id_date         Int NOT NULL ,
-        id_probleme     Int NOT NULL ,
+        id_test     int (11) Auto_increment  NOT NULL ,
+        nom_test    Varchar (100) ,
+        id_preuve   Int NOT NULL ,
+        id_outil    Int NOT NULL ,
+        id_date     Int NOT NULL ,
+        id_probleme Int NOT NULL ,
         PRIMARY KEY (id_test )
 )ENGINE=MyISAM;
 
@@ -148,10 +163,13 @@ ALTER TABLE version ADD CONSTRAINT FK_version_id_biblio FOREIGN KEY (id_biblio) 
 ALTER TABLE probleme ADD CONSTRAINT FK_probleme_id_sous_categorie FOREIGN KEY (id_sous_categorie) REFERENCES sous_categorie(id_sous_categorie);
 ALTER TABLE probleme ADD CONSTRAINT FK_probleme_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE bibliotheque_TPTP ADD CONSTRAINT FK_bibliotheque_TPTP_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
+ALTER TABLE preuve ADD CONSTRAINT FK_preuve_id_test FOREIGN KEY (id_test) REFERENCES test(id_test);
+ALTER TABLE preuve ADD CONSTRAINT FK_preuve_id_temps_execution FOREIGN KEY (id_temps_execution) REFERENCES temps_execution(id_temps_execution);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_temps_limite FOREIGN KEY (id_temps_limite) REFERENCES temps_limite(id_temps_limite);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_memoire FOREIGN KEY (id_memoire) REFERENCES memoire_limite(id_memoire);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE appel ADD CONSTRAINT FK_appel_id_coeur FOREIGN KEY (id_coeur) REFERENCES coeur(id_coeur);
+ALTER TABLE test ADD CONSTRAINT FK_test_id_preuve FOREIGN KEY (id_preuve) REFERENCES preuve(id_preuve);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_outil FOREIGN KEY (id_outil) REFERENCES outil(id_outil);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_date FOREIGN KEY (id_date) REFERENCES date(id_date);
 ALTER TABLE test ADD CONSTRAINT FK_test_id_probleme FOREIGN KEY (id_probleme) REFERENCES probleme(id_probleme);

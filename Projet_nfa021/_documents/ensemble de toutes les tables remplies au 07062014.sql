@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 11 Juin 2014 à 13:53
+-- Généré le: Sam 07 Juin 2014 à 14:16
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -175,6 +175,22 @@ CREATE TABLE IF NOT EXISTS `outil` (
   `nom_outil` varchar(50) NOT NULL,
   PRIMARY KEY (`id_outil`),
   UNIQUE KEY `nom_outil` (`nom_outil`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `preuve`
+--
+
+CREATE TABLE IF NOT EXISTS `preuve` (
+  `id_preuve` int(11) NOT NULL AUTO_INCREMENT,
+  `trouve` tinyint(1) NOT NULL,
+  `id_test` int(11) NOT NULL,
+  `id_temps_execution` int(11) NOT NULL,
+  PRIMARY KEY (`id_preuve`),
+  KEY `FK_preuve_id_test` (`id_test`),
+  KEY `FK_preuve_id_temps_execution` (`id_temps_execution`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -6951,6 +6967,18 @@ INSERT INTO `sous_categorie` (`id_sous_categorie`, `nom_sous_categorie`, `id_cat
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `temps_execution`
+--
+
+CREATE TABLE IF NOT EXISTS `temps_execution` (
+  `id_temps_execution` int(11) NOT NULL AUTO_INCREMENT,
+  `chrono` double NOT NULL,
+  PRIMARY KEY (`id_temps_execution`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `temps_limite`
 --
 
@@ -6970,12 +6998,12 @@ CREATE TABLE IF NOT EXISTS `temps_limite` (
 CREATE TABLE IF NOT EXISTS `test` (
   `id_test` int(11) NOT NULL AUTO_INCREMENT,
   `nom_test` varchar(100) DEFAULT NULL,
-  `preuve_trouvee` tinyint(1) DEFAULT NULL,
-  `temps_execution` varchar(25) DEFAULT NULL,
+  `id_preuve` int(11) NOT NULL,
   `id_outil` int(11) NOT NULL,
   `id_date` int(11) NOT NULL,
   `id_probleme` int(11) NOT NULL,
   PRIMARY KEY (`id_test`),
+  KEY `FK_test_id_preuve` (`id_preuve`),
   KEY `FK_test_id_outil` (`id_outil`),
   KEY `FK_test_id_date` (`id_date`),
   KEY `FK_test_id_probleme` (`id_probleme`)

@@ -19,9 +19,13 @@ session_start();
 	<link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
+
 <?php
-if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-	{
+	if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+		{
+			// si utilisateur est administrateur afficher menu latéral gauche avec options supplémentaires
+			if(isset ($_SESSION['administrateur']) AND ($_SESSION['administrateur'] == 1))		
+				include('aside.php'); 
 ?>
 
     <body>

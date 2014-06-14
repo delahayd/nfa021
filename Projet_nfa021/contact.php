@@ -23,10 +23,15 @@ session_start();
 </head>
 
  <body>
- <?php
-if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-	{
+
+<?php
+	if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+		{
+			// si utilisateur est administrateur afficher menu latéral gauche avec options supplémentaires
+			if(isset ($_SESSION['administrateur']) AND ($_SESSION['administrateur'] == 1))		
+				include('aside.php'); 
 ?>
+
 			<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 			<?php include('menu.php'); ?>
 					

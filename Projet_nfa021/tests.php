@@ -69,17 +69,21 @@ session_start();
 <?php
 	if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 		{
+			// si utilisateur est administrateur afficher menu latéral gauche avec options supplémentaires
+			if(isset ($_SESSION['administrateur']) AND ($_SESSION['administrateur'] == 1))		
+				include('aside.php'); 
 ?>
-
+			
+			
 <body>
-		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
-		<?php include('menu.php'); ?>
+		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
+			 include('menu.php'); ?>
+	
       
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
             <section class="row">
                 
                 <div class="col-lg-6">
-
 
 
 <form class="form-horizontal" method="POST" name="test">

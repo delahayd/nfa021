@@ -1,6 +1,8 @@
 <!-- menu lateral gauche réservé à l'administrateur -->
 
- <!--<div class="row">	-->
+
+ <div>
+</div> 
  
  <aside>
 	<div class="col-xs-3">
@@ -20,4 +22,3 @@
 	</div>
 </aside>
 
-<!--</div>-->

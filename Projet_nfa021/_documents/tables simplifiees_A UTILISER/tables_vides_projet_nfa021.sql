@@ -89,6 +89,7 @@ CREATE TABLE sous_categorie(
         id_sous_categorie  int (11) Auto_increment  NOT NULL ,
         nom_sous_categorie Varchar (10) ,
         id_categorie       Int NOT NULL ,
+        id_utilisateur     Int NOT NULL ,
         PRIMARY KEY (id_sous_categorie )
 )ENGINE=MyISAM;
 
@@ -110,5 +111,6 @@ ALTER TABLE test ADD CONSTRAINT FK_test_id_probleme FOREIGN KEY (id_probleme) RE
 ALTER TABLE categorie ADD CONSTRAINT FK_categorie_id_biblio FOREIGN KEY (id_biblio) REFERENCES bibliotheque_TPTP(id_biblio);
 ALTER TABLE categorie ADD CONSTRAINT FK_categorie_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE sous_categorie ADD CONSTRAINT FK_sous_categorie_id_categorie FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie);
+ALTER TABLE sous_categorie ADD CONSTRAINT FK_sous_categorie_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE executer ADD CONSTRAINT FK_executer_id_outil FOREIGN KEY (id_outil) REFERENCES outil(id_outil);
 ALTER TABLE executer ADD CONSTRAINT FK_executer_id_appel FOREIGN KEY (id_appel) REFERENCES appel(id_appel);

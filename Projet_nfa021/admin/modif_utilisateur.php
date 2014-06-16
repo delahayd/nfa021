@@ -62,37 +62,24 @@ if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//
 						
 					if ($est_admin)
 						{
-						print("Retirer les droits d'administrateur de ".$pseudo." ?");
-						
-						$sql_modif_admin = "UPDATE utilisateur
-											SET administrateur = '0'
-											WHERE id_utilisateur = $cle";
-						
-						$query_modif_adminr= mysqli_query($lien, $sql_modif_admin);		
+							$sql_modif_admin = "UPDATE utilisateur
+												SET administrateur = '0'
+												WHERE id_utilisateur = $cle";
 							
-							print("<div class =\"form-group\">");
-								 print("<div class=\"col-md-4\">");
-									print("<input class=\"btn btn-primary\" type = \"submit\" value = \"Valider\"/>");
-								print("</div>");	
-							print("</div>");	
+							$query_modif_adminr= mysqli_query($lien, $sql_modif_admin);	
+							
+							print($pseudo." n'est plus administrateur");	
 						}
 						
 						else
 							{
-							print("Ajouter les droits d'administrateur à ".$pseudo." ?");
+								$sql_modif_admin = "UPDATE utilisateur
+													SET administrateur = '1'
+													WHERE id_utilisateur = $cle";
 							
-							$sql_modif_admin = "UPDATE utilisateur
-											SET administrateur = '1'
-											WHERE id_utilisateur = $cle";
-						
-						$query_modif_adminr= mysqli_query($lien, $sql_modif_admin);	
-						
-							print("<div class =\"form-group\">");
-								 print("<div class=\"col-md-4\">");
-									print("<input class=\"btn btn-primary\" type = \"submit\" value = \"Valider\"/>");
-								print("</div>");	
-							print("</div>");
-					
+								$query_modif_adminr= mysqli_query($lien, $sql_modif_admin);	
+							
+								print($pseudo." est maintenant administrateur");
 							}
 			
 		}
@@ -100,8 +87,9 @@ if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//
 		
 	else				// si aucun choix
 		{
-					$sql_select_user ="SELECT id_utilisateur, prenom, nom, pseudo, email, sexe, administrateur
-										FROM utilisateur";
+					$sql_select_user ="SELECT id_utilisateur, prenom, nom, pseudo, sexe, administrateur
+										FROM utilisateur
+										ORDER by administrateur, nom";
 										
 					$query_select_user= mysqli_query($lien, $sql_select_user);
 					
@@ -111,14 +99,17 @@ if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//
 									while($donnees = mysqli_fetch_assoc($query_select_user))
 										{
 										$id = $donnees['id_utilisateur'];		//facilite saisie ligne suivante
-										print("<option value =\"$id\">".$donnees['prenom']." ".$donnees['nom']." -- Pseudo:  ".$donnees['pseudo']." -- Email: ".$donnees['email']." -- Sexe:  ".$donnees['sexe']." -- Est administrateur:  ".$donnees['administrateur']."</option> ");
+											if($donnees['administrateur']==0)
+												print("<option value =\"$id\">".$donnees['sexe']." -- ".$donnees['prenom']." ".$donnees['nom']." -- Pseudo:  ".$donnees['pseudo']."</option> ");
+											if($donnees['administrateur']==1)
+												print("<option value =\"$id\">".$donnees['sexe']." -- ".$donnees['prenom']." ".$donnees['nom']." -- Pseudo:  ".$donnees['pseudo']."----------  ADMINISTRATEUR  ---------- </option>");	
 										}
 							print("</select> ");
 						print("</div>");	
 						
 						print("<div class =\"form-group\">");
 							 print("<div class=\"col-md-4\">");
-								print("<input class=\"btn btn-primary\" type = \"submit\" value = \"Modifier les droits de l'utilisateur\"/>");
+								print("<input class=\"btn btn-primary\" type = \"submit\" value = \"Modifier les droits de l'utilisateur ?\"/>");
 							print("</div>");	
 						print("</div>");
 					print("</form>");

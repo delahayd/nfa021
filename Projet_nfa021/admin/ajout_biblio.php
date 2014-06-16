@@ -11,7 +11,7 @@ session_start();
 
 <!DOCTYPE html>
 
-<?php// print_r($_session); ?>
+<?php// print_r($_SESSION); ?>
 
 <html lang="fr">
 <head>
@@ -40,8 +40,51 @@ session_start();
 		<?php 	
 				print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
 				include('menu_admin.php'); 
-		 ?>
+				
+		//		<_________________________________________________traitement du formulaire uniquement si page demandé par un administrateur_____________________________________________________>
 
+		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
+			{	
+			
+			if(isset($_POST['ajout_bibliotheque']))
+				{
+				//variables renommées pour simplifier la requête sql
+				$nbiblio = $_POST['nom_biblio'];
+				$vbiblio = $_POST['version_biblio'];
+				$id_admin = $_SESSION['id_utilisateur'];
+				
+				$sql_ajout_bibliotheque = "INSERT INTO bibliotheque_TPTP
+											VALUES('', '$nbiblio', '$vbiblio', '$id_admin')";
+				 try {							
+					$query_ajout_bibliotheque= mysqli_query($lien, $sql_ajout_bibliotheque);
+					print("<font color =\"green\">Bibliothèque ".$nbiblio. $vbiblio." ajoutéé</font>");
+							}catch(Exception $e){print("erreur exécution");			//or die(mysql_error());
+					}
+				}
+		 ?>
+		 
+					<form method="POST" action="ajout_biblio.php">
+						<legend>Ajouter une bibliothèque de problèmes</legend>
+						<p>
+							<label>Nom de la bibliothèque à ajouter</label> : <input type="text" name="nom_biblio" />
+							<label>Version</label> : <input type="text" name="version_biblio" />
+							<div>
+								<input type="submit" name="ajout_bibliotheque" value="Enregistrer la nouvelle bibliothèque" class="btn btn-info">
+							</div>
+						 </p>
+					</form>
+					
+					
+		<?php
+		
+		 	}
+		
+else
+		print("Vous n'avez pas l'autorisation pour accéder à cette page");
+				
+?>
+		 
+		 
 	<script src="../js/jquery-1.8.3.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 </body>

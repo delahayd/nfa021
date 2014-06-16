@@ -144,7 +144,7 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 		mysqli_query($lien, "SET NAMES UTF8");
 		
 		//verifier existence des identifiants - mysqli
-		$sql_verif = "select administrateur, prenom, pseudo, password from utilisateur where pseudo = '$pseudo_connexion' and password = '$password'";	//requete sql
+		$sql_verif = "select id_utilisateur, administrateur, prenom, pseudo, password from utilisateur where pseudo = '$pseudo_connexion' and password = '$password'";	//requete sql
 		$query_verif = mysqli_query($lien, $sql_verif);								//execution de la requete
 		
 		$resultat = mysqli_fetch_assoc($query_verif);			//stocke le résultat de la requete dans un tableau associatif $resultat
@@ -154,6 +154,7 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 					print("<font color =\"green\">Bonjour ". $resultat['prenom']."</font><br>");
 					//$succes = 1;
 					session_start();
+					$_SESSION["id_utilisateur"]=$resultat["id_utilisateur"];
 					$_SESSION["administrateur"]=$resultat["administrateur"];
 					$_SESSION["prenom"]=$resultat["prenom"];
 					$_SESSION["pseudo"]=$resultat["pseudo"];

@@ -40,11 +40,28 @@ session_start();
 		<?php 	
 				print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
 				include('menu_admin.php'); 
-		 ?>
+				
+ <label>Votre pseudo</label>		//		<_________________________________________________traitement du formulaire_____________________________________________________>
+
+		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
+			{		
+		  ?>
+		 
+					<legend>Ajouter une sous-catégorie de problèmes</legend>
+					
+		<?php
+			
+					
+		 	}
+		
+else
+		print("Vous n'avez pas l'autorisation pour accéder à cette page");
+				
+?>
+		 
 		 
 	<script src="../js/jquery-1.8.3.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

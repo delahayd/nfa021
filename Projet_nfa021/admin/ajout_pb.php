@@ -41,7 +41,7 @@ session_start();
 				print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
 				include('menu_admin.php'); 
 				
- <label>Votre pseudo</label>		//		<_________________________________________________traitement du formulaire_____________________________________________________>
+ 	//		<_________________________________________________traitement du formulaire_____________________________________________________>
 
 		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
 			{		

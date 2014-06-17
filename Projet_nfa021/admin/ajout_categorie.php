@@ -41,18 +41,45 @@ session_start();
 				print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
 				include('menu_admin.php'); 
 				
- <label>Votre pseudo</label>		//		<_________________________________________________traitement du formulaire_____________________________________________________>
+	//		<_________________________________________________traitement du formulaire_____________________________________________________>
 
 		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
 			{		
-		 
+			// requete pour recupérer nom et version des bibliothèques existantes - OK
+				$sql_biblio = "SELECT id_biblio, nom_biblio, version
+								FROM bibliotheque_tptp
+								ORDER BY nom_biblio, version";
+								
+				$query_biblio = mysqli_query($lien, $sql_biblio);			//execution de la requête
+							
 		  ?>
 		 
-					<legend>Ajouter une catégorie de problèmes</legend>
-					
+					<form method="POST" action="ajout_biblio.php">
+						<legend>Ajouter une catégorie de problèmes</legend>
+						<p>
+							<label>Nom de la catégorie à ajouter :</label>  
+								<input type="text" name="nom_categorie" />
+								
+							<label>Dans quelle bibliothèque? </label> 
+								<?php
+									print("<select  name=\"nom_biblio\" class=\"input-xlarge\">");
+										while($biblio = mysqli_fetch_assoc($query_biblio))		//tableau associatif - manque des valeurs????
+											{
+												$id_biblio = $biblio['id_biblio'];
+												if(empty ($biblio['version']))	 print("<option value=\"".$id_biblio.">".$biblio['nom_biblio']."</option>");
+													else 						print("<option value=\"".$id_biblio.">".$biblio['nom_biblio']." version ".$biblio['version']."</option>");
+											}
+									print("</select>");
+								?>	
+								<div>Si vous ne trouvez pas la bibliothèque voulue, c'est <a href="ajout_biblio.php">ici</a></div>
+							<div>
+								<input type="submit" name="ajout_categorie" value="Enregistrer la catégorie" class="btn btn-info">
+								
+							</div>
+						 </p>
+					</form>
 		<?php
-					
-
+			
 		 	}
 		
 else

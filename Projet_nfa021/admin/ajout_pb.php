@@ -41,17 +41,63 @@ session_start();
 				print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
 				include('menu_admin.php'); 
 				
- 	//		<_________________________________________________traitement du formulaire_____________________________________________________>
+//		<_________________________________________________traitement du formulaire_____________________________________________________>
 
-		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
+	if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
 			{		
-			 ?>
+			
+			
+				if(isset($_POST['ajout_probleme']))
+				{
+				//variables renommées pour simplifier la requête sql
+				$nom_pb = $_POST['nom_probleme'];
+				$id_souscategorie=$_POST['id_souscategorie'];
+				$id_admin = $_SESSION['id_utilisateur'];
+				
+				$sql_ajout_pb = "INSERT INTO probleme
+								VALUES('', '$nom_pb', '$id_souscategorie', '$id_admin')";
+				 try {							
+					$query_ajout_pb= mysqli_query($lien, $sql_ajout_pb);
+					print("<font color =\"green\">Problème ".$nom_pb." ajouté</font>");
+							}catch(Exception $e){print("erreur exécution");			//or die(mysql_error());
+					}
+				}
+				
+			
+			// requete pour recupérer nom et version des bibliothèques existantes - OK
+				$sql_souscategorie = "SELECT id_sous_categorie, nom_sous_categorie
+									FROM sous_categorie
+									ORDER BY nom_sous_categorie";
+								
+				$query_souscategorie = mysqli_query($lien, $sql_souscategorie);			//execution de la requête
+							
+		  ?>
 		 
-					<legend>Ajouter un problème</legend>
-					
+					<form method="POST" action="ajout_pb.php">
+						<legend>Ajouter un problème</legend>
+						<p>
+							<label>Nom du problème à ajouter :</label>  
+								<input type="text" name="nom_probleme" />
+								
+							<label>Dans quelle sous-catégorie? </label> 
+								<?php
+									print("<select  name=\"id_souscategorie\" class=\"input-xlarge\">");
+										while($souscategorie = mysqli_fetch_assoc($query_souscategorie))		//tableau associatif OK
+											{
+												$id_souscategorie = $souscategorie['id_sous_categorie'];
+												 print("<option value=\"".$id_souscategorie."\">".$souscategorie['nom_sous_categorie']."</option>");
+											}
+									print("</select>");
+								?>	
+								<div>Si vous ne trouvez pas la sous-catégorie voulue, c'est <a href="ajout_souscategorie.php">ici</a></div>
+							<div>
+								<input type="submit" name="ajout_probleme" value="Enregistrer le problème" class="btn btn-info">
+								
+							</div>
+						 </p>
+					</form>
 		<?php
-					
-
+			
 		 	}
 		
 else

@@ -29,6 +29,7 @@ session_start();
 <?php
 	if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 		{
+			
 			// si utilisateur est administrateur afficher menu latéral gauche avec options supplémentaires
 			if(isset ($_SESSION['administrateur']) AND ($_SESSION['administrateur'] == 1))		
 				include('aside.php'); 
@@ -45,6 +46,26 @@ session_start();
 
 		if(isset($_SESSION['administrateur']) && ($_SESSION['administrateur'] == 1))		//si administrateur afficher la page
 			{		
+			
+			
+				if(isset($_POST['ajout_categorie']))
+				{
+				//variables renommées pour simplifier la requête sql
+				$nom_categorie = $_POST['nom_categorie'];
+				$id_biblio=$_POST['id_biblio'];
+				$id_admin = $_SESSION['id_utilisateur'];
+				
+				$sql_ajout_categorie = "INSERT INTO categorie
+										VALUES('', '$nom_categorie', '$id_biblio', '$id_admin')";
+				 try {							
+					$query_ajout_categorie= mysqli_query($lien, $sql_ajout_categorie);
+					print("<font color =\"green\">Catégorie ".$nom_categorie." ajoutéé</font>");
+							}catch(Exception $e){print("erreur exécution");			//or die(mysql_error());
+					}
+				}
+			
+					
+			
 			// requete pour recupérer nom et version des bibliothèques existantes - OK
 				$sql_biblio = "SELECT id_biblio, nom_biblio, version
 								FROM bibliotheque_tptp
@@ -54,7 +75,7 @@ session_start();
 							
 		  ?>
 		 
-					<form method="POST" action="ajout_biblio.php">
+					<form method="POST" action="ajout_categorie.php">
 						<legend>Ajouter une catégorie de problèmes</legend>
 						<p>
 							<label>Nom de la catégorie à ajouter :</label>  
@@ -62,12 +83,12 @@ session_start();
 								
 							<label>Dans quelle bibliothèque? </label> 
 								<?php
-									print("<select  name=\"nom_biblio\" class=\"input-xlarge\">");
-										while($biblio = mysqli_fetch_assoc($query_biblio))		//tableau associatif - manque des valeurs????
+									print("<select  name=\"id_biblio\" class=\"input-xlarge\">");
+										while($biblio = mysqli_fetch_assoc($query_biblio))		//tableau associatif OK
 											{
 												$id_biblio = $biblio['id_biblio'];
-												if(empty ($biblio['version']))	 print("<option value=\"".$id_biblio.">".$biblio['nom_biblio']."</option>");
-													else 						print("<option value=\"".$id_biblio.">".$biblio['nom_biblio']." version ".$biblio['version']."</option>");
+												if(empty ($biblio['version']))	 print("<option value=\"".$id_biblio."\">".$biblio['nom_biblio']."</option>");
+													else 						 print("<option value=\"".$id_biblio."\">".$biblio['nom_biblio']." version ".$biblio['version']."</option>");
 											}
 									print("</select>");
 								?>	

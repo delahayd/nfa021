@@ -4,9 +4,8 @@ ini_set("display_errors",0);error_reporting(0);
 
 
 <!DOCTYPE html>
-<?php require_once('Connections/bd_nfa021.php');?>
-<?php require ('Connections/connexion_bdd_mysqli.php');?>
-
+<?php require_once('Connections/bd_nfa021.php');			//mysql?>
+<?php include ('Connections/connexion_bdd_mysqli.php');?>
 
 <html lang="fr">
 <head>
@@ -65,7 +64,7 @@ ini_set("display_errors",0);error_reporting(0);
   if(isset($_POST['valider'])){
 
     $email = $_POST['email'];
-
+	mysql_select_db($database_bd_nfa021, $bd_nfa021);
     $sql = '   SELECT `password`,`pseudo` FROM `utilisateur` WHERE email="'.$email.'"    ';
     $req = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
     $mdp = mysql_result($req,0,"password");
@@ -74,7 +73,7 @@ ini_set("display_errors",0);error_reporting(0);
 
     if(empty($email) OR empty($pseudo) OR empty($mdp)){
 
-      echo 'Votre email n est pas identifié.';
+      echo 'Votre email n\'est pas identifié.';
     }
 
     else{

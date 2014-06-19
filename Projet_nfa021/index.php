@@ -4,7 +4,7 @@
 <?php include('fonctions.php');								//inclu le fichier fonctions.php à la page	?>
 
 <?php
-$lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysql
+$lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysqli
 
 
 //print_r($_POST);			//a supprimer quand page OK

@@ -1,4 +1,12 @@
+<?php
+ini_set("display_errors",0);error_reporting(0);
+?>
+
+
 <!DOCTYPE html>
+<?php require_once('Connections/bd_nfa021.php');?>
+<?php require ('Connections/connexion_bdd_mysqli.php');?>
+
 
 <html lang="fr">
 <head>
@@ -23,7 +31,7 @@
                 
                 <div class="col-lg-12">
                 
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="post" action="motdepasse.php" name="valider">
 <fieldset>
 
 <legend>Recuperer votre nom d'utilisateur ainsi que votre mot de passe. </legend>
@@ -31,7 +39,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Adresse Mail</label>
   <div class="controls">
-    <input id="textinput" name="textinput" type="text" placeholder="oupsss@oublie.cnam" class="input-xlarge">
+    <input id="email" name="email" type="text" placeholder="oupsss@oublie.cnam" class="input-xlarge">
     <p class="help-block">Veuillez entrer votre adresse mail puis valider.</p>
   </div>
 </div>
@@ -40,12 +48,64 @@
 <div class="control-group">
   <label class="control-label" for="singlebutton"></label>
   <div class="controls">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Valider</button>
+    <button id="singlebutton" name="valider" class="btn btn-primary">Valider</button>
   </div>
 </div>
 
 </fieldset>
 </form>
+
+
+
+<?php
+      
+
+
+
+  if(isset($_POST['valider'])){
+
+    $email = $_POST['email'];
+
+    $sql = '   SELECT `password`,`pseudo` FROM `utilisateur` WHERE email="'.$email.'"    ';
+    $req = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
+    $mdp = mysql_result($req,0,"password");
+    $pseudo = mysql_result($req,0,"pseudo");
+
+
+    if(empty($email) OR empty($pseudo) OR empty($mdp)){
+
+      echo 'Votre email n est pas identifié.';
+    }
+
+    else{
+
+      
+
+    $headers ='Content-type: text/html; charset="iso-8859-1"'."\r\n"; 
+    $headers.='From: "L equipe NFA021"<sav@nfa021.com>'."\r\n"; 
+    $headers.='Reply-To: sav@nfa021.com'."\n"; 
+    $headers.='Content-Transfer-Encoding: 8bit';                 
+    
+    
+    $message = '<p>Madame,Monsieur,<br><br>Veuillez trouver ci joint votre Pseudo ainsi que votre mot de passe comme demandé.<br><br>Pseudo= '.$pseudo.'<br>Mot de passe= '.$mdp.'<br><br>
+                Si necessaire n hesitez pas a nous contacter via notre formulaire de contact.<br><br>L equipe NFA021. Vous souhaite une bonne continuation.';
+    
+       
+      mail('maryse.chedanne@free.fr','Demande d informations',$message,$headers);
+
+      echo '<br>Un email vient de vous être envoyé.';
+
+
+
+
+
+    }
+    
+
+
+  }
+
+?>
 
 
                 </div>

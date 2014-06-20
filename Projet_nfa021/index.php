@@ -1,7 +1,7 @@
 
 <?php require_once('Connections/bd_nfa021.php');						//mysql?>
 <?php include('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
-<?php include('fonctions.php');								//inclu le fichier fonctions.php à la page	?>
+<?php //include('fonctions.php');								//inclu le fichier fonctions.php à la page	?>
 
 <?php
 $lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysqli
@@ -51,11 +51,11 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
+//if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
 
 // enregistre la date dans la table date - fonction dans la page fonctions.php
-	EnregistreDate($lien, $date);				
-	}
+	//EnregistreDate($lien, $date);				
+//	}
 
 
 //si le formulaire d'enregistrement n'est pas vide
@@ -99,19 +99,19 @@ if (!empty ($_POST) && (isset($_POST['nom'])))
 			elseif ($nb_pseudo ==0 AND $nb_email == 0 AND ($_POST['conf_mot_passe'] == $_POST['mot_de_passe']))
 					{
 					// récupere la clé primaire de la date (date_action) dans la table date dont la date est la date du jour
-							$sql_pk = "SELECT id_date
-										FROM date
-										WHERE date_action = '$date'";			
+						//	$sql_pk = "SELECT id_date
+						//				FROM date
+							//			WHERE date_action = '$date'";			
 						
-							$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
+							//$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
 
-							while($donnees = mysqli_fetch_assoc($query_pk))	
-								$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
+							//while($donnees = mysqli_fetch_assoc($query_pk))	
+						//		$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
 										
 								
 					// enregistrement de l'utilisateur dans la DBB
-							$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, id_date)
-											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]',$pk_date_inscription)";  
+							$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, date_inscription)
+											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]','$date')";  
 										
 							try{				
 								$query_insert = mysqli_query($lien, $sql_insert);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 16 Juin 2014 à 14:46
+-- Généré le: Ven 20 Juin 2014 à 13:42
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -25,15 +25,32 @@ USE `projet_nfa021`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `appel`
+-- Structure de la table `appeler`
 --
 
-CREATE TABLE IF NOT EXISTS `appel` (
-  `id_appel` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `appeler` (
+  `id_outil` int(11) NOT NULL,
+  `id_benchmark` int(11) NOT NULL,
+  PRIMARY KEY (`id_outil`,`id_benchmark`),
+  KEY `FK_appeler_id_benchmark` (`id_benchmark`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `benchmark`
+--
+
+CREATE TABLE IF NOT EXISTS `benchmark` (
+  `id_benchmark` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_benchmark` varchar(50) DEFAULT NULL,
+  `temps_limite` double DEFAULT NULL,
+  `memoire_limite` double DEFAULT NULL,
   `commentaire` text,
+  `date_benchmark` date DEFAULT NULL,
   `id_utilisateur` int(11) NOT NULL,
-  PRIMARY KEY (`id_appel`),
-  KEY `FK_appel_id_utilisateur` (`id_utilisateur`)
+  PRIMARY KEY (`id_benchmark`),
+  KEY `FK_benchmark_id_utilisateur` (`id_utilisateur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -45,18 +62,17 @@ CREATE TABLE IF NOT EXISTS `appel` (
 CREATE TABLE IF NOT EXISTS `bibliotheque_tptp` (
   `id_biblio` int(11) NOT NULL AUTO_INCREMENT,
   `nom_biblio` varchar(25) NOT NULL,
-  `version` varchar(25) DEFAULT NULL,
-  `id_utilisateur` int(11) NOT NULL,
+  `id_utilisateur_utilisateur` int(11) NOT NULL,
   PRIMARY KEY (`id_biblio`),
-  KEY `FK_bibliotheque_TPTP_id_utilisateur` (`id_utilisateur`)
+  KEY `FK_bibliotheque_TPTP_id_utilisateur_utilisateur` (`id_utilisateur_utilisateur`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `bibliotheque_tptp`
 --
 
-INSERT INTO `bibliotheque_tptp` (`id_biblio`, `nom_biblio`, `version`, `id_utilisateur`) VALUES
-(1, 'TPTP', NULL, 0);
+INSERT INTO `bibliotheque_tptp` (`id_biblio`, `nom_biblio`, `id_utilisateur_utilisateur`) VALUES
+(1, 'TPTP', 0);
 
 -- --------------------------------------------------------
 
@@ -67,52 +83,19 @@ INSERT INTO `bibliotheque_tptp` (`id_biblio`, `nom_biblio`, `version`, `id_utili
 CREATE TABLE IF NOT EXISTS `categorie` (
   `id_categorie` int(11) NOT NULL AUTO_INCREMENT,
   `nom_categorie` varchar(25) DEFAULT NULL,
-  `id_biblio` int(11) NOT NULL,
-  `id_utilisateur` int(11) NOT NULL,
+  `id_biblio_bibliotheque_TPTP` int(11) NOT NULL,
+  `id_utilisateur_utilisateur` int(11) NOT NULL,
   PRIMARY KEY (`id_categorie`),
-  KEY `FK_categorie_id_biblio` (`id_biblio`),
-  KEY `FK_categorie_id_utilisateur` (`id_utilisateur`)
+  KEY `FK_categorie_id_biblio_bibliotheque_TPTP` (`id_biblio_bibliotheque_TPTP`),
+  KEY `FK_categorie_id_utilisateur_utilisateur` (`id_utilisateur_utilisateur`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `categorie`
 --
 
-INSERT INTO `categorie` (`id_categorie`, `nom_categorie`, `id_biblio`, `id_utilisateur`) VALUES
+INSERT INTO `categorie` (`id_categorie`, `nom_categorie`, `id_biblio_bibliotheque_TPTP`, `id_utilisateur_utilisateur`) VALUES
 (1, 'FOF', 1, 0);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `date`
---
-
-CREATE TABLE IF NOT EXISTS `date` (
-  `id_date` int(11) NOT NULL AUTO_INCREMENT,
-  `date_action` date NOT NULL,
-  PRIMARY KEY (`id_date`),
-  UNIQUE KEY `date_action` (`date_action`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Contenu de la table `date`
---
-
-INSERT INTO `date` (`id_date`, `date_action`) VALUES
-(1, '2014-06-16');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `executer`
---
-
-CREATE TABLE IF NOT EXISTS `executer` (
-  `id_outil` int(11) NOT NULL,
-  `id_appel` int(11) NOT NULL,
-  PRIMARY KEY (`id_outil`,`id_appel`),
-  KEY `FK_executer_id_appel` (`id_appel`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -126,7 +109,15 @@ CREATE TABLE IF NOT EXISTS `outil` (
   `version` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id_outil`),
   UNIQUE KEY `nom_outil` (`nom_outil`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `outil`
+--
+
+INSERT INTO `outil` (`id_outil`, `nom_outil`, `version`) VALUES
+(1, 'zenon', NULL),
+(2, 'zenon_modulo', NULL);
 
 -- --------------------------------------------------------
 
@@ -136,20 +127,20 @@ CREATE TABLE IF NOT EXISTS `outil` (
 
 CREATE TABLE IF NOT EXISTS `probleme` (
   `id_probleme` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_probleme` varchar(50) NOT NULL,
+  `nom_probleme` varchar(50) CHARACTER SET utf8 NOT NULL,
   `id_sous_categorie` int(11) NOT NULL,
-  `id_utilisateur` int(11) NOT NULL,
+  `id_utilisateur_utilisateur` int(11) NOT NULL,
   PRIMARY KEY (`id_probleme`),
   UNIQUE KEY `nom_probleme` (`nom_probleme`),
-  KEY `FK_probleme_id_sous_categorie` (`id_sous_categorie`),
-  KEY `FK_probleme_id_utilisateur` (`id_utilisateur`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6678 ;
+  KEY `FK_probleme_id_categorie_categorie` (`id_sous_categorie`),
+  KEY `FK_probleme_id_utilisateur_utilisateur` (`id_utilisateur_utilisateur`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6678 ;
 
 --
 -- Contenu de la table `probleme`
 --
 
-INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur`) VALUES
+INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur_utilisateur`) VALUES
 (1, 'AGT001+1.p', 1, 0),
 (2, 'AGT001+2.p', 1, 0),
 (3, 'AGT002+1.p', 1, 0),
@@ -2071,7 +2062,7 @@ INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_
 (1919, 'KRS159+1.p', 21, 0),
 (1920, 'KRS160+1.p', 21, 0),
 (1921, 'KRS161+1.p', 21, 0);
-INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur`) VALUES
+INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur_utilisateur`) VALUES
 (1922, 'KRS162+1.p', 21, 0),
 (1923, 'KRS163+1.p', 21, 0),
 (1924, 'KRS164+1.p', 21, 0),
@@ -3898,9 +3889,9 @@ INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_
 (3745, 'SET013+4.p', 39, 0),
 (3746, 'SET014+3.p', 39, 0),
 (3747, 'SET014+4.p', 39, 0),
-(3748, 'SET015+4.p', 39, 0),
-(3749, 'SET016+1.p', 39, 0);
-INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur`) VALUES
+(3748, 'SET015+4.p', 39, 0);
+INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur_utilisateur`) VALUES
+(3749, 'SET016+1.p', 39, 0),
 (3750, 'SET016+4.p', 39, 0),
 (3751, 'SET017+1.p', 39, 0),
 (3752, 'SET018+1.p', 39, 0),
@@ -5746,10 +5737,10 @@ INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_
 (5592, 'SWC355+1.p', 43, 0),
 (5593, 'SWC356+1.p', 43, 0),
 (5594, 'SWC357+1.p', 43, 0),
-(5595, 'SWC358+1.p', 43, 0),
+(5595, 'SWC358+1.p', 43, 0);
+INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur_utilisateur`) VALUES
 (5596, 'SWC359+1.p', 43, 0),
-(5597, 'SWC360+1.p', 43, 0);
-INSERT INTO `probleme` (`id_probleme`, `nom_probleme`, `id_sous_categorie`, `id_utilisateur`) VALUES
+(5597, 'SWC360+1.p', 43, 0),
 (5598, 'SWC361+1.p', 43, 0),
 (5599, 'SWC362+1.p', 43, 0),
 (5600, 'SWC363+1.p', 43, 0),
@@ -6841,65 +6832,63 @@ CREATE TABLE IF NOT EXISTS `sous_categorie` (
   `id_sous_categorie` int(11) NOT NULL AUTO_INCREMENT,
   `nom_sous_categorie` varchar(10) DEFAULT NULL,
   `id_categorie` int(11) NOT NULL,
-  `id_utilisateur` int(11) NOT NULL,
   PRIMARY KEY (`id_sous_categorie`),
-  KEY `FK_sous_categorie_id_categorie` (`id_categorie`),
-  KEY `FK_sous_categorie_id_utilisateur` (`id_utilisateur`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
+  KEY `FK_sous_categorie_id_categorie` (`id_categorie`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
 -- Contenu de la table `sous_categorie`
 --
 
-INSERT INTO `sous_categorie` (`id_sous_categorie`, `nom_sous_categorie`, `id_categorie`, `id_utilisateur`) VALUES
-(1, 'AGT', 1, 0),
-(2, 'ALG', 1, 0),
-(3, 'ANA', 1, 0),
-(4, 'ARI', 1, 0),
-(5, 'BOO', 1, 0),
-(6, 'CAT', 1, 0),
-(7, 'COL', 1, 0),
-(8, 'COM', 1, 0),
-(9, 'CSR', 1, 0),
-(10, 'DAT', 1, 0),
-(11, 'FLD', 1, 0),
-(12, 'GEG', 1, 0),
-(13, 'GEO', 1, 0),
-(14, 'GRA', 1, 0),
-(15, 'GRP', 1, 0),
-(16, 'HAL', 1, 0),
-(17, 'HEN', 1, 0),
-(18, 'HWC', 1, 0),
-(19, 'HWV', 1, 0),
-(20, 'KLE', 1, 0),
-(21, 'KRS', 1, 0),
-(22, 'LAT', 1, 0),
-(23, 'LCL', 1, 0),
-(24, 'LDA', 1, 0),
-(25, 'MED', 1, 0),
-(26, 'MGT', 1, 0),
-(27, 'MSC', 1, 0),
-(28, 'NLP', 1, 0),
-(29, 'NUM', 1, 0),
-(30, 'NUN', 1, 0),
-(31, 'PLA', 1, 0),
-(32, 'PRO', 1, 0),
-(33, 'PUZ', 1, 0),
-(34, 'QUA', 1, 0),
-(35, 'REL', 1, 0),
-(36, 'RNG', 1, 0),
-(37, 'ROB', 1, 0),
-(38, 'SCT', 1, 0),
-(39, 'SET', 1, 0),
-(40, 'SEU', 1, 0),
-(41, 'SEV', 1, 0),
-(42, 'SWB', 1, 0),
-(43, 'SWC', 1, 0),
-(44, 'SWV', 1, 0),
-(45, 'SWW', 1, 0),
-(46, 'SYN', 1, 0),
-(47, 'SYO', 1, 0),
-(48, 'TOP', 1, 0);
+INSERT INTO `sous_categorie` (`id_sous_categorie`, `nom_sous_categorie`, `id_categorie`) VALUES
+(1, 'AGT', 1),
+(2, 'ALG', 1),
+(3, 'ANA', 1),
+(4, 'ARI', 1),
+(5, 'BOO', 1),
+(6, 'CAT', 1),
+(7, 'COL', 1),
+(8, 'COM', 1),
+(9, 'CSR', 1),
+(10, 'DAT', 1),
+(11, 'FLD', 1),
+(12, 'GEG', 1),
+(13, 'GEO', 1),
+(14, 'GRA', 1),
+(15, 'GRP', 1),
+(16, 'HAL', 1),
+(17, 'HEN', 1),
+(18, 'HWC', 1),
+(19, 'HWV', 1),
+(20, 'KLE', 1),
+(21, 'KRS', 1),
+(22, 'LAT', 1),
+(23, 'LCL', 1),
+(24, 'LDA', 1),
+(25, 'MED', 1),
+(26, 'MGT', 1),
+(27, 'MSC', 1),
+(28, 'NLP', 1),
+(29, 'NUM', 1),
+(30, 'NUN', 1),
+(31, 'PLA', 1),
+(32, 'PRO', 1),
+(33, 'PUZ', 1),
+(34, 'QUA', 1),
+(35, 'REL', 1),
+(36, 'RNG', 1),
+(37, 'ROB', 1),
+(38, 'SCT', 1),
+(39, 'SET', 1),
+(40, 'SEU', 1),
+(41, 'SEV', 1),
+(42, 'SWB', 1),
+(43, 'SWC', 1),
+(44, 'SWV', 1),
+(45, 'SWW', 1),
+(46, 'SYN', 1),
+(47, 'SYO', 1),
+(48, 'TOP', 1);
 
 -- --------------------------------------------------------
 
@@ -6912,16 +6901,14 @@ CREATE TABLE IF NOT EXISTS `test` (
   `nom_test` varchar(100) DEFAULT NULL,
   `preuve_trouvee` tinyint(1) DEFAULT NULL,
   `temps_execution` varchar(25) DEFAULT NULL,
-  `nb_coeur` int(11) DEFAULT NULL,
-  `temps_limite` double DEFAULT NULL,
-  `memoire_limite` double DEFAULT NULL,
+  `date_test` date DEFAULT NULL,
   `id_outil` int(11) NOT NULL,
-  `id_date` int(11) NOT NULL,
   `id_probleme` int(11) NOT NULL,
+  `id_benchmark` int(11) NOT NULL,
   PRIMARY KEY (`id_test`),
   KEY `FK_test_id_outil` (`id_outil`),
-  KEY `FK_test_id_date` (`id_date`),
-  KEY `FK_test_id_probleme` (`id_probleme`)
+  KEY `FK_test_id_probleme` (`id_probleme`),
+  KEY `FK_test_id_benchmark` (`id_benchmark`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -6932,24 +6919,16 @@ CREATE TABLE IF NOT EXISTS `test` (
 
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,
-  `administrateur` tinyint(1) DEFAULT '0',
+  `administrateur` tinyint(1) DEFAULT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `pseudo` varchar(25) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(25) NOT NULL,
   `sexe` char(1) NOT NULL,
-  `id_date` int(11) NOT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  KEY `FK_utilisateur_id_date` (`id_date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Contenu de la table `utilisateur`
---
-
-INSERT INTO `utilisateur` (`id_utilisateur`, `administrateur`, `nom`, `prenom`, `pseudo`, `email`, `password`, `sexe`, `id_date`) VALUES
-(1, 1, 'admin', 'admin', 'admin', 'admin@admin.fr', '0000', 'H', 1);
+  `date_inscription` date DEFAULT NULL,
+  PRIMARY KEY (`id_utilisateur`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

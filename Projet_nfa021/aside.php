@@ -20,6 +20,3 @@
 </aside>
 
 <!--</div>-->
-
-<a href="TON-ADRESSE-ICI" target="_blank"> BALISE BOUTON ICI </a> 
-<a href="TON-ADRESSE-ICI" target="_blank"> <input type="button" value="Bouton"> </a>

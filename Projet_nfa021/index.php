@@ -1,11 +1,8 @@
 
-<?php require_once('Connections/bd_nfa021.php');						//mysql?>
-<?php include('Connections/connexion_bdd_mysqli.php');				//mysqli ?>
-<?php //include('fonctions.php');								//inclu le fichier fonctions.php à la page	?>
+<?php require_once('Connections/bd_nfa021.php');						//mysql
+		include('Connections/connexion_bdd_mysqli.php');				//mysqli 
 
-<?php
 $lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysqli
-
 
 //print_r($_POST);			//a supprimer quand page OK
 
@@ -51,11 +48,6 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-//if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form")) {
-
-// enregistre la date dans la table date - fonction dans la page fonctions.php
-	//EnregistreDate($lien, $date);				
-//	}
 
 
 //si le formulaire d'enregistrement n'est pas vide
@@ -95,20 +87,9 @@ if (!empty ($_POST) && (isset($_POST['nom'])))
 				print("<font color =\"red\">MOT DE PASSE ERRONE - RECOMMENCEZ</font>");
 		
 	
-	//sinon si tous les champs sont OK et que les 2 compteurs sont à 0 on remplit la BDD en incluant la clé primaire de la date dans la table utilisateur
+	//sinon si tous les champs sont OK et que les 2 compteurs sont à 0 on remplit la BDD 
 			elseif ($nb_pseudo ==0 AND $nb_email == 0 AND ($_POST['conf_mot_passe'] == $_POST['mot_de_passe']))
 					{
-					// récupere la clé primaire de la date (date_action) dans la table date dont la date est la date du jour
-						//	$sql_pk = "SELECT id_date
-						//				FROM date
-							//			WHERE date_action = '$date'";			
-						
-							//$query_pk = mysqli_query($lien, $sql_pk);			//execution de la requete
-
-							//while($donnees = mysqli_fetch_assoc($query_pk))	
-						//		$pk_date_inscription = $donnees['id_date'];		//tableau associatif même pour une seule valeur - recupere clé primaire de la date - OK
-										
-								
 					// enregistrement de l'utilisateur dans la DBB
 							$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, date_inscription)
 											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]','$date')";  
@@ -170,20 +151,6 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 			
 							}	
 				}
-	
-	
-	////if(isset($succes))
-	//{
-	//ouverture de session
-	//session_start();
-	//$_SESSION["pseudo"]=$resultat["pseudo"];
-	//$_SESSION["prenom"]=$resultat["prenom"];
-	//$pseudo=$_SESSION["pseudo"];
-	//print("<span class=\"pseudo\">Bonjour</span>");
-			
-	//affichage du menu
-	//include "menu.php";
-
 	}	
 		
 // utile pour utiliser le mode de connexion mysql
@@ -192,6 +159,9 @@ $query_cnxuser = "SELECT pseudo, password FROM utilisateur";
 $cnxuser = mysql_query($query_cnxuser, $bd_nfa021) or die(mysql_error());
 $row_cnxuser = mysql_fetch_assoc($cnxuser);
 $totalRows_cnxuser = mysql_num_rows($cnxuser);
+	
+//on demarre la session
+session_start();	
 	
 ?>
 
@@ -208,8 +178,17 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
 	<link href="css/style.css" rel="stylesheet" media="screen"> 
 </head>
 
+<?php
+	if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
+		{
+			// si utilisateur est administrateur afficher menu latéral gauche avec options supplémentaires
+			if(isset ($_SESSION['administrateur']) AND ($_SESSION['administrateur'] == 1))		
+				include('aside.php'); 
+?>
+
  <body>
-	<?php include('menu_index.php'); ?>
+	<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); 
+		include('menu_index.php'); ?>
 	
           <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
             <article class="row">
@@ -320,9 +299,20 @@ $totalRows_cnxuser = mysql_num_rows($cnxuser);
 
         </div>
 
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-    </body>
+<?php
+	}
+	else 
+	{
+		print("<font color =\"red\">SESSION NON DEMARREE</font>");
+		include('menu_index.php'); 
+	}
+?>
+
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+ </body>
+ 
 </html>
 
 <?php //mysql_free_result($cnxuser); 			//Cette extension est obsolète depuis PHP 5.5.0 ?>

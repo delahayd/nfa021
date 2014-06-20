@@ -20,6 +20,12 @@
                       <li> <a href="contact.php">Contact</a> </li>
                  </ul>
 
+				<form class="navbar-form pull-right" method = "post" name = "identification" action = "index.php">
+                    		
+					<!-- traiter le bouton deconnexion -->
+                     <a href = "deconnexion.php" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Déconnexion</a><br>
+				          
+                </form>
 			
                  <form class="navbar-form pull-right" method = "post" name = "identification" action = "index.php">
                      <span style=color:#999;>Se connecter</span>

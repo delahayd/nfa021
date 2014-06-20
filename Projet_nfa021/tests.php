@@ -6,6 +6,8 @@
 //require_once('Connections/bd_nfa021.php'); 					//mysql
 include ('Connections/bd_nfa021.php');				//mysqli 
 
+$date = date("Y-m-d");	//date au format PhpMyAdmin
+
 /*
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 

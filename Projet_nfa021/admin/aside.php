@@ -7,18 +7,19 @@
  <aside>
 	<div class="col-xs-3">
 		<div class="btn-group-vertical">
-			<button type="button" class="btn btn-default"><a href="ajout_biblio.php">Ajouter une bibliotheque</a></button>
+			<input type="button" class="btn btn-default" value="Ajouter une bibliotheque" onclick="location.href='ajout_biblio.php'"/> 
 			
-			<button type="button" class="btn btn-default"><a href="ajout_categorie.php">Ajouter une catégorie</a></button>
+			<input type="button" class="btn btn-default" value="Ajouter une catégorie" onclick="location.href='ajout_categorie.php'"/> 
+		
+			<input type="button" class="btn btn-default" value="Ajouter une sous-catégorie" onclick="location.href='ajout_souscategorie.php'"/>
+		
+			<input type="button" class="btn btn-default" value="Ajouter un problème" onclick="location.href='ajout_pb.php'"/>
 			
-			<button type="button" class="btn btn-default"><a href="ajout_souscategorie.php">Ajouter une sous-catégorie</a></button>
-			
-			<button type="button" class="btn btn-default"><a href="ajout_pb.php">Ajouter un problème</a></button>
-			
-			<button type="button" class="btn btn-default"><a href="modif_utilisateur.php">Modifier les droits d'un utilisateur</a></button>
-			
+			<input type="button" class="btn btn-default" value="Modifier les droits d'un utilisateur" onclick="location.href='modif_utilisateur.php'"/>
 		  
 		</div>
 	</div>
 </aside>
+
+
 

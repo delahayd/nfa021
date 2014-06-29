@@ -103,7 +103,7 @@ session_start();
 
         //Permet d'inserer une requete des le debut de l'ouverture de la page si la variable id_operatition est vide(Permet ainsi un affichage plus clair sans erreurs.)
            if($_SESSION['id_last_op']==NULL){
-                $sql='INSERT INTO problemes_choisies VALUES ("",0,0,"","'.$_SESSION['id_utilisateur'].'",NOW(),NOW())';
+                $sql='INSERT INTO problemes_choisies VALUES ("",1,0,"","'.$_SESSION['id_utilisateur'].'",NOW(),NOW())';
                 mysql_query ($sql) or die ('Erreur SQL !'.$sql.'<br />'.mysql_error());
                                              }
       ?>
@@ -282,7 +282,9 @@ if(isset($_POST['chercher'])) {
                  header('Location:tests.php');
                                     }
 
-                          else{ echo 'Vous n avez rien selectionner...'; }
+                          else{ echo '<div class="alert alert-danger alert-dismissable" contenteditable="true">
+      Vous n avez selectionner aucun problemes a teste...
+    </div>'; }
                                     }
           //----------------------------------------------------------------------
         ?>
@@ -294,9 +296,9 @@ if(isset($_POST['chercher'])) {
   <label class="control-label" for="Selection des outils">Outils</label>
   <div class="controls">
     <select id="outils" name="outils" class="input-xlarge">
-      <option>Zenon</option>
-      <option>Zenon Modulo</option>
-      <option>Zenon et Zenon Modulo</option>
+      <option value="Zenon">Zenon</option>
+      <option value="Zenon Modulo">Zenon Modulo</option>
+      <option value="Zenon et Zenon Modulo">Zenon et Zenon Modulo</option>
     </select>
   </div>
 </div>
@@ -311,6 +313,7 @@ if(isset($_POST['chercher'])) {
       <option>4</option>
       <option>5</option>
       <option>6</option>
+      <option>7</option>
     </select>
   </div>
 </div>
@@ -333,6 +336,12 @@ if(isset($_POST['chercher'])) {
   </div>
 </div>
 
+<div class="control-group">
+  <label class="control-label" for="textarea">Text Area</label>
+  <div class="controls">                     
+    <textarea id="textarea" name="textarea"></textarea>
+  </div>
+</div>
 
 <div class="control-group">
   <label class="control-label" for="lancement_execution"></label>
@@ -341,6 +350,8 @@ if(isset($_POST['chercher'])) {
     <button id="lancement_arret" name="lancement_arret" class="btn btn-danger">Arreter l'execution</button>
   </div>
 </div>
+
+
 
 </fieldset>
 </form>
@@ -360,12 +371,15 @@ if(isset($_POST['chercher'])) {
 
           
           if(isset($_POST['valider'])){ 
+            if ($_SESSION['boolean_resul']==TRUE) {
             
-            // VARIABLE DONT VOUS AVEZ BESOIN POUR LE LANCEMENT LINUX, AU TOTAL IL Y A 5 VARIABLES.
+            
+            // VARIABLE DONT VOUS AVEZ BESOIN POUR LE LANCEMENT LINUX, AU TOTAL IL Y A 6 VARIABLES.
             $outils=$_POST['outils'];
             $nbre_coeurs=$_POST['nbre_de_coeur'];
             $tps_limite=$_POST['temps'];
             $memoire=$_POST['memoire'];
+            $commentaire=$_POST['textarea'];
             
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -389,8 +403,9 @@ if(isset($_POST['chercher'])) {
 
              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
+         
+          $sql2='INSERT INTO benchmark VALUES ("","'.$outils.'","'.$tps_limite.'","'.$memoire.'","'.$commentaire.'",NOW(),"'.$_SESSION['id_utilisateur'].'")';
+          mysql_query ($sql2) or die ('Erreur SQL !'.$sql2.'<br />'.mysql_error());
 
 
           
@@ -399,7 +414,14 @@ if(isset($_POST['chercher'])) {
           $sql='INSERT INTO problemes_choisies VALUES ("","'.$dernier_op.'","'.$resultat.'","","'.$_SESSION['id_utilisateur'].'",NOW(),NOW())';
           mysql_query ($sql) or die ('Erreur SQL !'.$sql.'<br />'.mysql_error());
           header('Location:tests.php');
-          
+    }
+
+    else{
+           
+      echo '<div class="alert alert-danger alert-dismissable" contenteditable="true">Les champs ne sont pas remplies correctement. Veuillez proceder a une verification </div>';
+    
+
+    }    
  }
 
 ?>

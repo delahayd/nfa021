@@ -10,7 +10,7 @@ $lien = mysqli_connect($server, $user, $pass, $bdd);				//variable pour mysql
 $date = date("Y-m-d");	//date au format PhpMyAdmin
 
 if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
-		print("<font color =\"green\">". $_SESSION['prenom']." </font><br>"); 
+		
 
 
 if (!function_exists("GetSQLValueString")) {
@@ -98,7 +98,19 @@ if (!empty ($_POST) && (isset($_POST['nom'])))
 					{
 					// enregistrement de l'utilisateur dans la DBB
 							$sql_insert  = "INSERT  INTO utilisateur (nom, prenom, pseudo, email, password, sexe, date_inscription)
-											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]','$date')";  
+											VALUES ('$_POST[nom]','$_POST[prenom]','$_POST[nom_utilisateur]','$_POST[adresse_mail]','$_POST[mot_de_passe]','$_POST[Sexe]','$date')";
+
+                       //Mail de Confirmation envoyé à l'administrateur et a l'inscrit
+                       $headers ='Content-type: text/html; charset="utf-8"'."\r\n"; 
+                       $headers.='From: "L equipe NFA021"<membres@nfa021.com>'."\r\n"; 
+                       $headers.='Reply-To: membres@nfa021.com'."\n"; 
+                       $headers.='Content-Transfer-Encoding: 8bit';                    
+                       mail('arphinee@gmail.com','Nouveau Membre Inscrit ^_^ Youpiii','Inscription d un nouvel utilisateur.<br>',$headers);
+                       mail ($_POST['adresse_mail'],'Confirmation d Inscription', 'Nous vous confirmons que votre inscription est bien valider.<br><br>L equipe technique NFA021.<br> Merci et a Bientot ^_^',$headers);
+    
+                     
+
+
 										
 							try{				
 								$query_insert = mysqli_query($lien, $sql_insert);
@@ -138,7 +150,7 @@ elseif (!empty ($_POST))				//contenu de la fonction test_connexion();
 		
 			if(($resultat["pseudo"] == $pseudo_connexion) AND ($resultat["password"] == $password))
 					{
-					print("<font color =\"green\">Bonjour ". $resultat['prenom']."</font><br>");
+					//print("<font color =\"green\">Bonjour ". $resultat['prenom']."</font><br>");
 					//$succes = 1;
 					session_start();
 					$_SESSION["id_utilisateur"]=$resultat["id_utilisateur"];

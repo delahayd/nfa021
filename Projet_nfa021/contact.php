@@ -113,7 +113,7 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
       else {
                       
     
-    $headers ='Content-type: text/html; charset="iso-8859-1"'."\r\n"; 
+    $headers ='Content-type: text/html; charset="utf-8"'."\r\n"; 
     $headers.='From: "L equipe NFA021"<sav@nfa021.com>'."\r\n"; 
     $headers.='Reply-To: sav@nfa021.com'."\n"; 
     $headers.='Content-Transfer-Encoding: 8bit';                 
@@ -123,7 +123,7 @@ if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
     
        
        mail('maryse.chedanne@gmail.com','Demande d informations',$message,$headers);
-       mail ($email,'Demande Recu', 'Nous vous informons que nous avons bien recu vos remarques.<br><br>L equipe technique NFA021 vous fera un retour au plus vite.<br> Merci et a Bientot ^_^',$headers);
+       mail ($email,'Demande Reçue', 'Nous vous informons que nous avons bien reçu vos remarques.<br><br>L\'équipe technique NFA021 vous fera un retour au plus vite.<br> Merci et à Bientôt ^_^',$headers);
      
 
              echo '<p style=text-align:center;>Votre message a bien été envoyer.</p>';

@@ -31,7 +31,7 @@ session_start();
 ?>
 
     <body>
-		<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
+		<?php //print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 		<?php include('menu.php'); ?>
 		
 		

@@ -27,7 +27,7 @@ session_start();
 if(isset($_SESSION['pseudo']) AND isset($_SESSION['prenom']))
 	{
 ?>
-			<?php print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
+			<?php //print("<font color =\"green\">". $_SESSION['prenom']."</font><br>"); ?>
 			<?php include('menu.php'); ?>
 					
             <!--_____________________ARTICLE PRESENTATION DU PROJET LIGNE DE "12" DEBUT_____________________-->
